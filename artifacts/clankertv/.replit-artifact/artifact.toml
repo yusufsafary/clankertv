@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "ClankerTV"
+version = "1.0.0"
+id = "artifacts/clankertv"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21940
+
+[services.development]
+run = "pnpm --filter @workspace/clankertv run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/clankertv", "run", "build" ]
+publicDir = "artifacts/clankertv/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21940"
+BASE_PATH = "/"
