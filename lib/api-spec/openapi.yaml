@@ -1,0 +1,372 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: ClankerTV API specification - proxying Clanker.world data
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: tokens
+    description: Token discovery and data from Clanker
+  - name: trending
+    description: Trending tokens and analytics
+  - name: portfolio
+    description: Portfolio watchlist management
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /tokens:
+    get:
+      operationId: listTokens
+      tags: [tokens]
+      summary: List recently launched tokens
+      description: Get the latest tokens deployed via Clanker on Base
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+            maximum: 50
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum: [newest, oldest, trending]
+            default: newest
+      responses:
+        "200":
+          description: List of tokens
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenListResponse"
+
+  /tokens/{address}:
+    get:
+      operationId: getToken
+      tags: [tokens]
+      summary: Get token details
+      description: Get detailed info for a specific token by contract address
+      parameters:
+        - name: address
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Token detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Token"
+        "404":
+          description: Token not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /tokens/trending:
+    get:
+      operationId: getTrendingTokens
+      tags: [trending]
+      summary: Get trending tokens
+      description: Returns top trending tokens by volume and market cap movement
+      parameters:
+        - name: timeframe
+          in: query
+          schema:
+            type: string
+            enum: [1h, 6h, 24h]
+            default: 24h
+      responses:
+        "200":
+          description: Trending token list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenListResponse"
+
+  /stats:
+    get:
+      operationId: getStats
+      tags: [trending]
+      summary: Get platform stats
+      description: Returns aggregate stats for the ClankerTV platform
+      responses:
+        "200":
+          description: Platform stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlatformStats"
+
+  /portfolio:
+    get:
+      operationId: getPortfolio
+      tags: [portfolio]
+      summary: Get watchlist items
+      description: Get all saved watchlist entries
+      responses:
+        "200":
+          description: Watchlist items
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortfolioListResponse"
+    post:
+      operationId: addToPortfolio
+      tags: [portfolio]
+      summary: Add token to watchlist
+      description: Save a token address to the watchlist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddPortfolioBody"
+      responses:
+        "201":
+          description: Added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortfolioItem"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /portfolio/{id}:
+    delete:
+      operationId: removeFromPortfolio
+      tags: [portfolio]
+      summary: Remove token from watchlist
+      description: Remove a saved watchlist entry by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Removed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PortfolioItem"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    Token:
+      type: object
+      properties:
+        id:
+          type: integer
+        contract_address:
+          type: string
+        name:
+          type: string
+        symbol:
+          type: string
+        decimals:
+          type: integer
+        image_url:
+          type: string
+          nullable: true
+        pool_address:
+          type: string
+          nullable: true
+        cast_hash:
+          type: string
+          nullable: true
+        requestor_fid:
+          type: integer
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        pair:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        type:
+          type: string
+          nullable: true
+        presale_price_in_eth:
+          type: number
+          nullable: true
+        starting_market_cap:
+          type: number
+          nullable: true
+        current_market_cap:
+          type: number
+          nullable: true
+        price_change_24h:
+          type: number
+          nullable: true
+        volume_24h:
+          type: number
+          nullable: true
+        warpcast_url:
+          type: string
+          nullable: true
+        requestor_username:
+          type: string
+          nullable: true
+        requestor_pfp:
+          type: string
+          nullable: true
+      required:
+        - id
+        - contract_address
+        - name
+        - symbol
+        - decimals
+        - created_at
+
+    TokenListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Token"
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
+      required:
+        - data
+        - page
+        - limit
+        - total
+
+    PlatformStats:
+      type: object
+      properties:
+        total_tokens:
+          type: integer
+        tokens_24h:
+          type: integer
+        total_volume_24h:
+          type: number
+        avg_market_cap:
+          type: number
+        trending_up:
+          type: integer
+        trending_down:
+          type: integer
+      required:
+        - total_tokens
+        - tokens_24h
+        - total_volume_24h
+        - avg_market_cap
+        - trending_up
+        - trending_down
+
+    PortfolioItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        contract_address:
+          type: string
+        name:
+          type: string
+        symbol:
+          type: string
+        notes:
+          type: string
+          nullable: true
+        added_at:
+          type: string
+          format: date-time
+      required:
+        - id
+        - contract_address
+        - name
+        - symbol
+        - added_at
+
+    PortfolioListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/PortfolioItem"
+        total:
+          type: integer
+      required:
+        - data
+        - total
+
+    AddPortfolioBody:
+      type: object
+      properties:
+        contract_address:
+          type: string
+        name:
+          type: string
+        symbol:
+          type: string
+        notes:
+          type: string
+          nullable: true
+      required:
+        - contract_address
+        - name
+        - symbol
