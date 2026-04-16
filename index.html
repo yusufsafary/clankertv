@@ -41,22 +41,6 @@
     overflow-x: hidden;
   }
 
-  /* scanline overlay */
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0,0,0,0.03) 2px,
-      rgba(0,0,0,0.03) 4px
-    );
-    pointer-events: none;
-    z-index: 9999;
-  }
-
   /* ─── TICKER ─── */
   .ticker {
     background: var(--deep);
@@ -142,11 +126,6 @@
     position: absolute;
     inset: 3px;
     background: var(--acid);
-    animation: blink 2.4s ease-in-out infinite;
-  }
-  @keyframes blink {
-    0%,100% { opacity: 1; }
-    50% { opacity: 0.4; }
   }
   .logo-text {
     font-size: 13px;
@@ -227,7 +206,6 @@
     height: 6px;
     background: var(--acid);
     display: inline-block;
-    animation: blink 1.5s ease infinite;
   }
   .header-title {
     font-family: var(--mono);
@@ -237,10 +215,7 @@
     line-height: 1.1;
     letter-spacing: -0.5px;
   }
-  .header-title span {
-    color: var(--acid);
-    position: relative;
-  }
+  .header-title span { color: var(--acid); }
   .header-sub {
     font-family: var(--sans);
     font-size: 12px;
@@ -277,6 +252,133 @@
     text-transform: uppercase;
     margin-top: 2px;
   }
+
+  /* ─── HOW TO ─── */
+  .howto {
+    background: var(--void);
+    border-bottom: 1px solid var(--line2);
+    padding: 0 16px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .howto-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    cursor: pointer;
+    user-select: none;
+    border: none;
+    background: transparent;
+    width: 100%;
+    font-family: var(--mono);
+  }
+  .howto-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--text2);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .howto-label::before {
+    content: '?';
+    width: 14px;
+    height: 14px;
+    border: 1px solid var(--text3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    color: var(--text3);
+  }
+  .howto-caret {
+    font-size: 9px;
+    color: var(--text3);
+    transition: transform 0.2s;
+  }
+  .howto-caret.open { transform: rotate(180deg); }
+  .howto-body {
+    display: none;
+    padding-bottom: 14px;
+  }
+  .howto-body.open { display: block; }
+  .howto-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .howto-step {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .howto-num {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--acid);
+    width: 16px;
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+  .howto-text {
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--text2);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+  .howto-text b { color: var(--text); font-weight: 500; font-family: var(--mono); font-size: 10px; }
+  .howto-note {
+    margin-top: 10px;
+    padding: 8px 10px;
+    border: 1px solid var(--line2);
+    background: var(--acid-ghost);
+    font-family: var(--sans);
+    font-size: 10px;
+    color: var(--text2);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+  .howto-note b { color: var(--acid); font-weight: 600; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; }
+
+  /* ─── MAINNET STATUS ─── */
+  .mainnet-bar {
+    background: var(--void);
+    border-bottom: 1px solid var(--line2);
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .mbar-label {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--text3);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .mbar-chips {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .mchip {
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 2px 7px;
+    border: 1px solid;
+    text-transform: uppercase;
+  }
+  .mchip.live { color: var(--acid); border-color: rgba(0,255,102,0.25); background: var(--acid-ghost); }
+  .mchip.mock { color: var(--amber); border-color: rgba(255,184,0,0.2); background: rgba(255,184,0,0.04); }
 
   /* ─── FILTERS ─── */
   .filter-bar {
@@ -411,7 +513,7 @@
     gap: 3px;
   }
   .row-chain.base { color: #0052ff; border-color: rgba(0,82,255,0.3); }
-  .row-chain.sol { color: #9945ff; border-color: rgba(153,69,255,0.3); }
+  .row-chain.solana { color: #9945ff; border-color: rgba(153,69,255,0.3); }
   .row-badge {
     font-size: 8px;
     font-weight: 700;
@@ -422,6 +524,18 @@
   }
   .row-badge.hot { color: var(--amber); border: 1px solid rgba(255,184,0,0.3); background: rgba(255,184,0,0.05); }
   .row-badge.new { color: var(--acid); border: 1px solid rgba(0,255,102,0.3); background: var(--acid-ghost); }
+
+  /* data status dot */
+  .row-datastatus {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-left: 4px;
+    margin-top: 3px;
+    align-self: flex-start;
+  }
+  .row-datastatus.live { background: var(--acid); }
+  .row-datastatus.mock { background: var(--amber); }
 
   .row-price-col {
     margin-left: auto;
@@ -548,7 +662,6 @@
     background: var(--acid);
     flex-shrink: 0;
     margin-top: 3px;
-    animation: blink 1s infinite;
   }
   .toast-body { font-size: 10px; color: var(--text); line-height: 1.5; }
   .toast-body strong { color: var(--acid); font-size: 9px; letter-spacing: 1px; }
@@ -628,6 +741,59 @@
   </div>
 </div>
 
+<!-- HOW TO -->
+<div style="background:var(--deep);border-bottom:1px solid var(--line2);">
+  <div class="howto">
+    <button class="howto-toggle" id="howtoToggle" onclick="toggleHowto()">
+      <span class="howto-label">HOW TO USE</span>
+      <span class="howto-caret" id="howtoCaret">▼</span>
+    </button>
+    <div class="howto-body" id="howtoBody">
+      <div class="howto-steps">
+        <div class="howto-step">
+          <span class="howto-num">01</span>
+          <span class="howto-text"><b>FILTER</b> by chain (BASE / SOL) or status (NEW · TRENDING · WATCHLIST) using the tab bar below.</span>
+        </div>
+        <div class="howto-step">
+          <span class="howto-num">02</span>
+          <span class="howto-text"><b>TAP a token row</b> to expand details — MCAP, VOL 24H, and liquidity are shown inline per token.</span>
+        </div>
+        <div class="howto-step">
+          <span class="howto-num">03</span>
+          <span class="howto-text"><b>FC / X / CHART links</b> open Warpcast, Twitter/X, and DexScreener for that token directly.</span>
+        </div>
+        <div class="howto-step">
+          <span class="howto-num">04</span>
+          <span class="howto-text"><b>CLANKER link</b> takes you to the token's page on clanker.world to buy or track on-chain.</span>
+        </div>
+        <div class="howto-step">
+          <span class="howto-num">05</span>
+          <span class="howto-text"><b>ALERTS button</b> (top right) — connect to receive push alerts when new hot tokens launch.</span>
+        </div>
+        <div class="howto-step">
+          <span class="howto-num">06</span>
+          <span class="howto-text"><b>Data freshness</b> — a <span style="color:var(--acid);font-family:var(--mono);font-size:10px;">●</span> green dot = live mainnet data · <span style="color:var(--amber);font-family:var(--mono);font-size:10px;">●</span> amber dot = demo/mock data, not yet connected to live feed.</span>
+        </div>
+      </div>
+      <div class="howto-note">
+        <b>Note</b> — This is a UI prototype. Price &amp; volume data is currently hardcoded (mock). Integrate a live API (e.g. DexScreener, GeckoTerminal, or Clanker's own feed) to replace static values with real mainnet data.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAINNET STATUS BAR -->
+<div style="background:var(--void);border-bottom:1px solid var(--line2);padding:7px 16px;display:flex;align-items:center;gap:10px;">
+  <span class="mbar-label">DATA STATUS</span>
+  <div class="mbar-chips">
+    <span class="mchip mock">PRICE · MOCK</span>
+    <span class="mchip mock">VOL · MOCK</span>
+    <span class="mchip mock">MCAP · MOCK</span>
+    <span class="mchip live">CHAIN · LIVE</span>
+    <span class="mchip live">SOCIAL LINKS · LIVE</span>
+  </div>
+</div>
+
 <!-- FILTERS -->
 <div class="filter-bar">
   <button class="f-btn on" onclick="setFilter(this,'all')">ALL</button>
@@ -666,17 +832,20 @@
 </div>
 
 <script>
+// ─── TOKEN DATA
+// datastatus: 'mock' = hardcoded demo, 'live' = would be real mainnet feed
+// All price/vol/mcap/liq values are MOCK (static). Chain & social links are real.
 const TOKENS = [
-  { name:'OpenBet', sym:'OpenBet', chain:'base', price:'$0.00132', chg:'+1432.3%', up:true, mcap:'$132.4k', vol:'$156.8k', liq:'$45.2k', holders:'1.2k', fc:'openbet', tw:'openbet', tag:'hot' },
-  { name:'Agent Conductor', sym:'AC', chain:'base', price:'$0.00209', chg:'+165.6%', up:true, mcap:'$209.2k', vol:'$330.1k', liq:'$88.7k', holders:'3.4k', fc:'agentconductor', tw:'', tag:'hot' },
-  { name:'UPONLY', sym:'UPONLY', chain:'base', price:'$0.00237', chg:'+61.6%', up:true, mcap:'$237.1k', vol:'$678.0k', liq:'$120k', holders:'5.6k', fc:'uponly', tw:'uponly', tag:'' },
-  { name:'VOLM', sym:'VOLM', chain:'solana', price:'$0.00745', chg:'+31.4%', up:true, mcap:'$744.6k', vol:'$425.4k', liq:'$200k', holders:'8.1k', fc:'', tw:'volmtoken', tag:'' },
-  { name:'XChat', sym:'XCHAT', chain:'base', price:'$0.000037', chg:'+16202%', up:true, mcap:'$37.6k', vol:'$89.2k', liq:'$12k', holders:'420', fc:'xchat', tw:'', tag:'new' },
-  { name:'Openbet Sol', sym:'OPENBET', chain:'solana', price:'$0.000635', chg:'+172.9%', up:true, mcap:'$63.5k', vol:'$44.1k', liq:'$18k', holders:'788', fc:'', tw:'openbetsol', tag:'new' },
-  { name:'Lume Agent', sym:'LUME', chain:'base', price:'$0.000228', chg:'-26.2%', up:false, mcap:'$22.8k', vol:'$417.6k', liq:'$33k', holders:'2.1k', fc:'lumeagent', tw:'lumeagent', tag:'' },
-  { name:'Sharp World', sym:'SHARP', chain:'base', price:'$0.000123', chg:'-48.1%', up:false, mcap:'$122.8k', vol:'$186.7k', liq:'$41k', holders:'1.9k', fc:'', tw:'sharpworld', tag:'' },
-  { name:'DebtReliefBot', sym:'DRB', chain:'solana', price:'$0.0081', chg:'-6.0%', up:false, mcap:'$8.1M', vol:'$74.5k', liq:'$580k', holders:'14.2k', fc:'bankr', tw:'bankr', tag:'' },
-  { name:'Charms', sym:'CHARMS', chain:'base', price:'$0.000229', chg:'-78.9%', up:false, mcap:'$22.9k', vol:'$69.7k', liq:'$9k', holders:'312', fc:'', tw:'charmstoken', tag:'' },
+  { name:'OpenBet',       sym:'OpenBet',  chain:'base',   price:'$0.00132',   chg:'+1432.3%', up:true,  mcap:'$132.4k', vol:'$156.8k', liq:'$45.2k',  holders:'1.2k',  fc:'openbet',        tw:'openbet',    tag:'hot',  datastatus:'mock' },
+  { name:'Agent Conductor',sym:'AC',      chain:'base',   price:'$0.00209',   chg:'+165.6%',  up:true,  mcap:'$209.2k', vol:'$330.1k', liq:'$88.7k',  holders:'3.4k',  fc:'agentconductor', tw:'',           tag:'hot',  datastatus:'mock' },
+  { name:'UPONLY',        sym:'UPONLY',   chain:'base',   price:'$0.00237',   chg:'+61.6%',   up:true,  mcap:'$237.1k', vol:'$678.0k', liq:'$120k',   holders:'5.6k',  fc:'uponly',         tw:'uponly',     tag:'',     datastatus:'mock' },
+  { name:'VOLM',          sym:'VOLM',    chain:'solana', price:'$0.00745',   chg:'+31.4%',   up:true,  mcap:'$744.6k', vol:'$425.4k', liq:'$200k',   holders:'8.1k',  fc:'',               tw:'volmtoken',  tag:'',     datastatus:'mock' },
+  { name:'XChat',         sym:'XCHAT',   chain:'base',   price:'$0.000037',  chg:'+16202%',  up:true,  mcap:'$37.6k',  vol:'$89.2k',  liq:'$12k',    holders:'420',   fc:'xchat',          tw:'',           tag:'new',  datastatus:'mock' },
+  { name:'Openbet Sol',   sym:'OPENBET', chain:'solana', price:'$0.000635',  chg:'+172.9%',  up:true,  mcap:'$63.5k',  vol:'$44.1k',  liq:'$18k',    holders:'788',   fc:'',               tw:'openbetsol', tag:'new',  datastatus:'mock' },
+  { name:'Lume Agent',    sym:'LUME',    chain:'base',   price:'$0.000228',  chg:'-26.2%',   up:false, mcap:'$22.8k',  vol:'$417.6k', liq:'$33k',    holders:'2.1k',  fc:'lumeagent',      tw:'lumeagent',  tag:'',     datastatus:'mock' },
+  { name:'Sharp World',   sym:'SHARP',   chain:'base',   price:'$0.000123',  chg:'-48.1%',   up:false, mcap:'$122.8k', vol:'$186.7k', liq:'$41k',    holders:'1.9k',  fc:'',               tw:'sharpworld', tag:'',     datastatus:'mock' },
+  { name:'DebtReliefBot', sym:'DRB',     chain:'solana', price:'$0.0081',    chg:'-6.0%',    up:false, mcap:'$8.1M',   vol:'$74.5k',  liq:'$580k',   holders:'14.2k', fc:'bankr',          tw:'bankr',      tag:'',     datastatus:'mock' },
+  { name:'Charms',        sym:'CHARMS',  chain:'base',   price:'$0.000229',  chg:'-78.9%',   up:false, mcap:'$22.9k',  vol:'$69.7k',  liq:'$9k',     holders:'312',   fc:'',               tw:'charmstoken',tag:'',     datastatus:'mock' },
 ];
 
 function render(tokens) {
@@ -695,6 +864,7 @@ function render(tokens) {
             <span class="row-sym">$${t.sym}</span>
             ${t.tag === 'hot' ? '<span class="row-badge hot">HOT</span>' : ''}
             ${t.tag === 'new' ? '<span class="row-badge new">NEW</span>' : ''}
+            <span class="row-datastatus ${t.datastatus}" title="${t.datastatus === 'live' ? 'Live mainnet data' : 'Mock / demo data'}"></span>
           </div>
           <div class="row-name">${t.name}</div>
           <span class="row-chain ${t.chain}">${t.chain === 'base' ? 'BASE' : 'SOLANA'}</span>
@@ -741,13 +911,21 @@ document.querySelectorAll('.bnav').forEach(b => {
   });
 });
 
-// theme toggle (minimal, since we keep dark as primary)
+// theme toggle
 let dark = true;
 document.getElementById('themeBtn').addEventListener('click', function() {
   dark = !dark;
   document.body.style.filter = dark ? '' : 'invert(1) hue-rotate(160deg)';
   this.textContent = dark ? 'DARK' : 'LITE';
 });
+
+// howto accordion
+function toggleHowto() {
+  const body = document.getElementById('howtoBody');
+  const caret = document.getElementById('howtoCaret');
+  const open = body.classList.toggle('open');
+  caret.classList.toggle('open', open);
+}
 
 // hide toast
 setTimeout(() => {
