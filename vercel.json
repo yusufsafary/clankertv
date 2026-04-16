@@ -1,0 +1,21 @@
+{
+  "buildCommand": "pnpm install --frozen-lockfile=false && cd artifacts/clankertv && npx vite build --config vite.config.vercel.ts",
+  "outputDirectory": "artifacts/clankertv/dist/public",
+  "installCommand": "pnpm install --frozen-lockfile=false",
+  "framework": null,
+  "rewrites": [
+    { "source": "/api/tokens/trending", "destination": "/api/trending" },
+    { "source": "/api/tokens/:address", "destination": "/api/token/:address" },
+    { "source": "/api/tokens", "destination": "/api/tokens" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, OPTIONS" }
+      ]
+    }
+  ]
+}
