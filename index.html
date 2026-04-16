@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClankerTV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --void: #04060a;
+    --deep: #070c11;
+    --surface: #0b1018;
+    --panel: #0f1620;
+    --line: rgba(0,255,102,0.08);
+    --line2: rgba(0,255,102,0.15);
+    --acid: #00ff66;
+    --acid-dim: rgba(0,255,102,0.55);
+    --acid-ghost: rgba(0,255,102,0.06);
+    --red: #ff3358;
+    --red-dim: rgba(255,51,88,0.55);
+    --amber: #ffb800;
+    --text: #c8d8c2;
+    --text2: #5a7a5e;
+    --text3: #2d4530;
+    --dim: rgba(200,216,194,0.35);
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--mono);
+    background: var(--void);
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* scanline overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ─── TICKER ─── */
+  .ticker {
+    background: var(--deep);
+    border-bottom: 1px solid var(--line2);
+    height: 28px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  .ticker::before {
+    content: 'LIVE';
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 48px;
+    background: var(--acid);
+    color: var(--void);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    flex-shrink: 0;
+  }
+  .ticker-track {
+    display: flex;
+    gap: 0;
+    animation: scroll 30s linear infinite;
+    white-space: nowrap;
+    padding-left: 48px;
+  }
+  .ticker-item {
+    font-size: 10px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    border-right: 1px solid var(--line);
+    letter-spacing: 0.3px;
+  }
+  .t-sym { color: var(--text); font-weight: 600; }
+  .t-up { color: var(--acid); }
+  .t-dn { color: var(--red); }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    height: 48px;
+    background: var(--deep);
+    border-bottom: 1px solid var(--line2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .logo-mark {
+    width: 26px;
+    height: 26px;
+    border: 1.5px solid var(--acid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .logo-mark::before {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    background: var(--acid);
+    animation: blink 2.4s ease-in-out infinite;
+  }
+  @keyframes blink {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .logo-text {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .logo-text b { color: var(--acid); font-weight: 700; }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .nav-tag {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: var(--text2);
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border: 1px solid var(--line2);
+    cursor: pointer;
+    transition: all 0.15s;
+    background: transparent;
+    font-family: var(--mono);
+  }
+  .nav-tag:hover, .nav-tag.active {
+    color: var(--acid);
+    border-color: var(--acid);
+    background: var(--acid-ghost);
+  }
+  .nav-connect {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--void);
+    background: var(--acid);
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-family: var(--mono);
+    transition: opacity 0.15s;
+  }
+  .nav-connect:hover { opacity: 0.8; }
+
+  /* ─── HEADER ─── */
+  .header {
+    background: var(--deep);
+    border-bottom: 1px solid var(--line2);
+    padding: 20px 16px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: start;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .header-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--text2);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .header-label::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--acid);
+    display: inline-block;
+    animation: blink 1.5s ease infinite;
+  }
+  .header-title {
+    font-family: var(--mono);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+  .header-title span {
+    color: var(--acid);
+    position: relative;
+  }
+  .header-sub {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--text2);
+    margin-top: 8px;
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  /* stats grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line2);
+    border: 1px solid var(--line2);
+    min-width: 140px;
+  }
+  .stat-cell {
+    background: var(--deep);
+    padding: 8px 10px;
+    text-align: right;
+  }
+  .stat-n {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--acid);
+    letter-spacing: -0.3px;
+  }
+  .stat-l {
+    font-size: 8px;
+    color: var(--text2);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* ─── FILTERS ─── */
+  .filter-bar {
+    display: flex;
+    gap: 0;
+    padding: 0 16px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line2);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .filter-bar::-webkit-scrollbar { display: none; }
+  .f-btn {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text2);
+    background: transparent;
+    border: none;
+    border-right: 1px solid var(--line);
+    padding: 10px 14px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border-bottom: 2px solid transparent;
+  }
+  .f-btn:hover { color: var(--text); }
+  .f-btn.on {
+    color: var(--acid);
+    border-bottom-color: var(--acid);
+    background: var(--acid-ghost);
+  }
+  .f-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .f-dot.base { background: #0052ff; }
+  .f-dot.sol { background: #9945ff; }
+
+  /* ─── SECTION HEADER ─── */
+  .sec-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+  }
+  .sec-title {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text2);
+  }
+  .sec-count {
+    font-size: 9px;
+    color: var(--text3);
+    letter-spacing: 1px;
+  }
+
+  /* ─── TOKEN LIST ─── */
+  .token-list { padding-bottom: 72px; }
+
+  .token-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+    cursor: pointer;
+    transition: background 0.1s;
+    position: relative;
+    overflow: hidden;
+  }
+  .token-row::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: transparent;
+    transition: background 0.15s;
+  }
+  .token-row:hover { background: var(--panel); }
+  .token-row:hover::before { background: var(--acid); }
+  .token-row.tag-hot::before { background: var(--amber); }
+  .token-row.tag-new::before { background: var(--acid); }
+
+  .row-main {
+    display: flex;
+    align-items: center;
+    padding: 11px 16px 7px 18px;
+    gap: 10px;
+  }
+  .row-idx {
+    font-size: 9px;
+    color: var(--text3);
+    width: 14px;
+    flex-shrink: 0;
+    letter-spacing: 0.5px;
+  }
+  .row-sym {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.5px;
+    line-height: 1;
+  }
+  .row-name {
+    font-family: var(--sans);
+    font-size: 10px;
+    color: var(--text2);
+    margin-top: 2px;
+    font-weight: 300;
+  }
+  .row-chain {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 2px 5px;
+    border: 1px solid;
+    margin-top: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .row-chain.base { color: #0052ff; border-color: rgba(0,82,255,0.3); }
+  .row-chain.sol { color: #9945ff; border-color: rgba(153,69,255,0.3); }
+  .row-badge {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 2px 6px;
+    margin-left: 6px;
+    align-self: flex-start;
+  }
+  .row-badge.hot { color: var(--amber); border: 1px solid rgba(255,184,0,0.3); background: rgba(255,184,0,0.05); }
+  .row-badge.new { color: var(--acid); border: 1px solid rgba(0,255,102,0.3); background: var(--acid-ghost); }
+
+  .row-price-col {
+    margin-left: auto;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .row-price {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.2px;
+  }
+  .row-chg {
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 2px;
+    letter-spacing: 0.3px;
+  }
+  .row-chg.up { color: var(--acid); }
+  .row-chg.dn { color: var(--red); }
+
+  .row-stats {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    border-top: 1px solid var(--line);
+    margin: 0 18px;
+  }
+  .mini {
+    padding: 5px 0;
+    text-align: center;
+    border-right: 1px solid var(--line);
+  }
+  .mini:last-child { border-right: none; }
+  .mini-v {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--dim);
+    letter-spacing: 0.2px;
+  }
+  .mini-l {
+    font-size: 8px;
+    color: var(--text3);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 1px;
+  }
+
+  .row-social {
+    display: flex;
+    gap: 0;
+    padding: 6px 18px;
+    border-top: 1px solid var(--line);
+  }
+  .soc-link {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text2);
+    text-decoration: none;
+    padding: 3px 8px;
+    border: 1px solid var(--line);
+    margin-right: 4px;
+    transition: all 0.12s;
+  }
+  .soc-link:hover { color: var(--acid); border-color: var(--acid-dim); }
+
+  /* ─── BOTTOM NAV ─── */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--deep);
+    border-top: 1px solid var(--line2);
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    z-index: 100;
+    height: 56px;
+  }
+  .bnav {
+    background: transparent;
+    border: none;
+    border-right: 1px solid var(--line);
+    color: var(--text2);
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    transition: all 0.15s;
+    padding: 0;
+  }
+  .bnav:last-child { border-right: none; }
+  .bnav.on { color: var(--acid); background: var(--acid-ghost); }
+  .bnav:hover:not(.on) { color: var(--text); }
+  .bnav-ico {
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  /* ─── TOAST ─── */
+  .toast {
+    position: fixed;
+    bottom: 68px;
+    right: 12px;
+    background: var(--panel);
+    border: 1px solid var(--acid);
+    padding: 10px 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    max-width: 220px;
+    animation: tin 0.3s ease, tout 0.4s 4.6s ease forwards;
+    z-index: 200;
+    box-shadow: 0 0 20px rgba(0,255,102,0.1);
+  }
+  .toast-pulse {
+    width: 6px; height: 6px;
+    background: var(--acid);
+    flex-shrink: 0;
+    margin-top: 3px;
+    animation: blink 1s infinite;
+  }
+  .toast-body { font-size: 10px; color: var(--text); line-height: 1.5; }
+  .toast-body strong { color: var(--acid); font-size: 9px; letter-spacing: 1px; }
+  @keyframes tin { from { opacity:0; transform:translateX(12px); } to { opacity:1; transform:none; } }
+  @keyframes tout { to { opacity:0; pointer-events:none; } }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--void); }
+  ::-webkit-scrollbar-thumb { background: var(--text3); }
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track" id="tickerTrack">
+    <div class="ticker-item"><span class="t-sym">UPONLY</span><span class="t-up">+61.6%</span></div>
+    <div class="ticker-item"><span class="t-sym">VOLM</span><span class="t-up">+31.4%</span></div>
+    <div class="ticker-item"><span class="t-sym">AC</span><span class="t-up">+165.6%</span></div>
+    <div class="ticker-item"><span class="t-sym">LUME</span><span class="t-dn">-26.2%</span></div>
+    <div class="ticker-item"><span class="t-sym">SHARP</span><span class="t-dn">-48.1%</span></div>
+    <div class="ticker-item"><span class="t-sym">OpenBet</span><span class="t-up">+1432.3%</span></div>
+    <div class="ticker-item"><span class="t-sym">DRB</span><span class="t-dn">-6.0%</span></div>
+    <div class="ticker-item"><span class="t-sym">CHARMS</span><span class="t-dn">-78.9%</span></div>
+    <div class="ticker-item"><span class="t-sym">XCHAT</span><span class="t-up">+16202%</span></div>
+    <div class="ticker-item"><span class="t-sym">UPONLY</span><span class="t-up">+61.6%</span></div>
+    <div class="ticker-item"><span class="t-sym">VOLM</span><span class="t-up">+31.4%</span></div>
+    <div class="ticker-item"><span class="t-sym">AC</span><span class="t-up">+165.6%</span></div>
+    <div class="ticker-item"><span class="t-sym">LUME</span><span class="t-dn">-26.2%</span></div>
+    <div class="ticker-item"><span class="t-sym">SHARP</span><span class="t-dn">-48.1%</span></div>
+    <div class="ticker-item"><span class="t-sym">OpenBet</span><span class="t-up">+1432.3%</span></div>
+    <div class="ticker-item"><span class="t-sym">DRB</span><span class="t-dn">-6.0%</span></div>
+    <div class="ticker-item"><span class="t-sym">CHARMS</span><span class="t-dn">-78.9%</span></div>
+    <div class="ticker-item"><span class="t-sym">XCHAT</span><span class="t-up">+16202%</span></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-mark"></div>
+    <span class="logo-text">CLANKER<b>TV</b></span>
+  </a>
+  <div class="nav-right">
+    <button class="nav-tag" id="themeBtn">DARK</button>
+    <button class="nav-connect">ALERTS</button>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-grid">
+    <div>
+      <div class="header-label">ALPHA DISCOVERY · BASE &amp; SOLANA</div>
+      <div class="header-title">TOKEN<br><span>TERMINAL</span></div>
+      <div class="header-sub">Real-time signals for tokens launched on Clanker. No noise.</div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-cell">
+        <div class="stat-n">$8.5B</div>
+        <div class="stat-l">VOL</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-n">247</div>
+        <div class="stat-l">TKN</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-n">$2.9M</div>
+        <div class="stat-l">24H</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-n">12</div>
+        <div class="stat-l">NEW</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FILTERS -->
+<div class="filter-bar">
+  <button class="f-btn on" onclick="setFilter(this,'all')">ALL</button>
+  <button class="f-btn" onclick="setFilter(this,'base')"><span class="f-dot base"></span>BASE</button>
+  <button class="f-btn" onclick="setFilter(this,'solana')"><span class="f-dot sol"></span>SOL</button>
+  <button class="f-btn" onclick="setFilter(this,'new')">NEW</button>
+  <button class="f-btn" onclick="setFilter(this,'trending')">TRENDING</button>
+  <button class="f-btn" onclick="setFilter(this,'watchlist')">WATCHLIST</button>
+</div>
+
+<!-- SECTION HEAD -->
+<div class="sec-head">
+  <span class="sec-title" id="secTitle">TRENDING NOW</span>
+  <span class="sec-count" id="secCount">10 TOKENS</span>
+</div>
+
+<!-- TOKEN LIST -->
+<div class="token-list" id="tokenList"></div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <button class="bnav on"><span class="bnav-ico">⌂</span>HOME</button>
+  <button class="bnav"><span class="bnav-ico">◎</span>SCAN</button>
+  <button class="bnav"><span class="bnav-ico">◈</span>ALERTS</button>
+  <button class="bnav"><span class="bnav-ico">★</span>WATCH</button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-pulse"></div>
+  <div class="toast-body">
+    <strong>NEW ↑ OPENBET</strong><br>
+    Launched on Base<br>
+    +1432% · 1.2k holders
+  </div>
+</div>
+
+<script>
+const TOKENS = [
+  { name:'OpenBet', sym:'OpenBet', chain:'base', price:'$0.00132', chg:'+1432.3%', up:true, mcap:'$132.4k', vol:'$156.8k', liq:'$45.2k', holders:'1.2k', fc:'openbet', tw:'openbet', tag:'hot' },
+  { name:'Agent Conductor', sym:'AC', chain:'base', price:'$0.00209', chg:'+165.6%', up:true, mcap:'$209.2k', vol:'$330.1k', liq:'$88.7k', holders:'3.4k', fc:'agentconductor', tw:'', tag:'hot' },
+  { name:'UPONLY', sym:'UPONLY', chain:'base', price:'$0.00237', chg:'+61.6%', up:true, mcap:'$237.1k', vol:'$678.0k', liq:'$120k', holders:'5.6k', fc:'uponly', tw:'uponly', tag:'' },
+  { name:'VOLM', sym:'VOLM', chain:'solana', price:'$0.00745', chg:'+31.4%', up:true, mcap:'$744.6k', vol:'$425.4k', liq:'$200k', holders:'8.1k', fc:'', tw:'volmtoken', tag:'' },
+  { name:'XChat', sym:'XCHAT', chain:'base', price:'$0.000037', chg:'+16202%', up:true, mcap:'$37.6k', vol:'$89.2k', liq:'$12k', holders:'420', fc:'xchat', tw:'', tag:'new' },
+  { name:'Openbet Sol', sym:'OPENBET', chain:'solana', price:'$0.000635', chg:'+172.9%', up:true, mcap:'$63.5k', vol:'$44.1k', liq:'$18k', holders:'788', fc:'', tw:'openbetsol', tag:'new' },
+  { name:'Lume Agent', sym:'LUME', chain:'base', price:'$0.000228', chg:'-26.2%', up:false, mcap:'$22.8k', vol:'$417.6k', liq:'$33k', holders:'2.1k', fc:'lumeagent', tw:'lumeagent', tag:'' },
+  { name:'Sharp World', sym:'SHARP', chain:'base', price:'$0.000123', chg:'-48.1%', up:false, mcap:'$122.8k', vol:'$186.7k', liq:'$41k', holders:'1.9k', fc:'', tw:'sharpworld', tag:'' },
+  { name:'DebtReliefBot', sym:'DRB', chain:'solana', price:'$0.0081', chg:'-6.0%', up:false, mcap:'$8.1M', vol:'$74.5k', liq:'$580k', holders:'14.2k', fc:'bankr', tw:'bankr', tag:'' },
+  { name:'Charms', sym:'CHARMS', chain:'base', price:'$0.000229', chg:'-78.9%', up:false, mcap:'$22.9k', vol:'$69.7k', liq:'$9k', holders:'312', fc:'', tw:'charmstoken', tag:'' },
+];
+
+function render(tokens) {
+  const list = document.getElementById('tokenList');
+  document.getElementById('secCount').textContent = tokens.length + ' TOKENS';
+  if (!tokens.length) {
+    list.innerHTML = '<div style="padding:32px 16px;text-align:center;font-size:11px;color:var(--text3);letter-spacing:1px;">NO TOKENS FOUND</div>';
+    return;
+  }
+  list.innerHTML = tokens.map((t, i) => `
+    <div class="token-row ${t.tag ? 'tag-'+t.tag : ''}">
+      <div class="row-main">
+        <span class="row-idx">${String(i+1).padStart(2,'0')}</span>
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+            <span class="row-sym">$${t.sym}</span>
+            ${t.tag === 'hot' ? '<span class="row-badge hot">HOT</span>' : ''}
+            ${t.tag === 'new' ? '<span class="row-badge new">NEW</span>' : ''}
+          </div>
+          <div class="row-name">${t.name}</div>
+          <span class="row-chain ${t.chain}">${t.chain === 'base' ? 'BASE' : 'SOLANA'}</span>
+          <span style="font-size:9px;color:var(--text3);margin-left:8px;letter-spacing:0.5px;">${t.holders} holders</span>
+        </div>
+        <div class="row-price-col">
+          <div class="row-price">${t.price}</div>
+          <div class="row-chg ${t.up ? 'up' : 'dn'}">${t.chg}</div>
+        </div>
+      </div>
+      <div class="row-stats">
+        <div class="mini"><div class="mini-v">${t.mcap}</div><div class="mini-l">MCAP</div></div>
+        <div class="mini"><div class="mini-v">${t.vol}</div><div class="mini-l">VOL 24H</div></div>
+        <div class="mini"><div class="mini-v">${t.liq}</div><div class="mini-l">LIQ</div></div>
+      </div>
+      <div class="row-social">
+        ${t.fc ? `<a href="https://warpcast.com/${t.fc}" target="_blank" class="soc-link">FC</a>` : ''}
+        ${t.tw ? `<a href="https://x.com/${t.tw}" target="_blank" class="soc-link">X</a>` : ''}
+        <a href="https://clanker.world" target="_blank" class="soc-link">CLANKER</a>
+        <a href="https://dexscreener.com" target="_blank" class="soc-link">CHART</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+const LABELS = { all:'TRENDING NOW', base:'BASE TOKENS', solana:'SOLANA TOKENS', new:'NEW LAUNCHES', trending:'TRENDING UP', watchlist:'WATCHLIST' };
+function setFilter(btn, type) {
+  document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('secTitle').textContent = LABELS[type] || 'TOKENS';
+  let f = TOKENS;
+  if (type === 'base') f = TOKENS.filter(t => t.chain === 'base');
+  else if (type === 'solana') f = TOKENS.filter(t => t.chain === 'solana');
+  else if (type === 'new') f = TOKENS.filter(t => t.tag === 'new');
+  else if (type === 'trending') f = TOKENS.filter(t => t.up);
+  else if (type === 'watchlist') f = [];
+  render(f);
+}
+
+document.querySelectorAll('.bnav').forEach(b => {
+  b.addEventListener('click', function() {
+    document.querySelectorAll('.bnav').forEach(x => x.classList.remove('on'));
+    this.classList.add('on');
+  });
+});
+
+// theme toggle (minimal, since we keep dark as primary)
+let dark = true;
+document.getElementById('themeBtn').addEventListener('click', function() {
+  dark = !dark;
+  document.body.style.filter = dark ? '' : 'invert(1) hue-rotate(160deg)';
+  this.textContent = dark ? 'DARK' : 'LITE';
+});
+
+// hide toast
+setTimeout(() => {
+  const t = document.getElementById('toast');
+  if (t) t.style.display = 'none';
+}, 5200);
+
+render(TOKENS);
+</script>
+</body>
+</html>
