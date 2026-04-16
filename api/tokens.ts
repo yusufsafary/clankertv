@@ -1,0 +1,91 @@
+
+
+const CLANKER_BASE = "https://www.clanker.world";
+
+interface ClankerRawToken {
+  id: number;
+  contract_address: string;
+  name: string;
+  symbol: string;
+  img_url?: string | null;
+  pool_address?: string | null;
+  cast_hash?: string | null;
+  requestor_fid?: number | null;
+  created_at: string;
+  deployed_at?: string | null;
+  pair?: string | null;
+  type?: string | null;
+  starting_market_cap?: number | null;
+  social_context?: { username?: string | null; platform?: string | null } | null;
+  related?: { market?: { marketCap?: number | null; volume24h?: number | null; priceChange24h?: number | null } | null } | null;
+}
+
+interface RawListResponse {
+  data: ClankerRawToken[];
+  page?: number;
+  limit?: number;
+  total?: number;
+}
+
+function mapToken(raw: ClankerRawToken) {
+  const warpcastUrl =
+    raw.cast_hash && raw.cast_hash.startsWith("0x")
+      ? `https://warpcast.com/~/conversations/${raw.cast_hash}`
+      : raw.cast_hash ?? null;
+  return {
+    id: raw.id,
+    contract_address: raw.contract_address,
+    name: raw.name,
+    symbol: raw.symbol,
+    decimals: 18,
+    image_url: raw.img_url ?? null,
+    pool_address: raw.pool_address ?? null,
+    cast_hash: raw.cast_hash ?? null,
+    requestor_fid: raw.requestor_fid ?? null,
+    created_at: raw.deployed_at ?? raw.created_at,
+    pair: raw.pair ?? null,
+    description: null,
+    type: raw.type ?? null,
+    presale_price_in_eth: null,
+    starting_market_cap: raw.starting_market_cap ?? null,
+    current_market_cap: raw.related?.market?.marketCap ?? null,
+    price_change_24h: raw.related?.market?.priceChange24h ?? null,
+    volume_24h: raw.related?.market?.volume24h ?? null,
+    warpcast_url: warpcastUrl,
+    requestor_username: raw.social_context?.username ?? null,
+    requestor_pfp: null,
+  };
+}
+
+export default async function handler(req: any, res: any) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  if (req.method === "OPTIONS") return res.status(200).end();
+  if (req.method !== "GET") return res.status(405).json({ error: "Method not allowed" });
+
+  const page = Number(req.query.page) || 1;
+  const limit = Math.min(Number(req.query.limit) || 20, 20);
+  const sort = req.query.sort === "oldest" ? "asc" : undefined;
+
+  const url = new URL(`${CLANKER_BASE}/api/tokens`);
+  url.searchParams.set("page", String(page));
+  url.searchParams.set("limit", String(limit));
+  if (sort) url.searchParams.set("sort", sort);
+
+  try {
+    const upstream = await fetch(url.toString(), {
+      headers: { Accept: "application/json", "User-Agent": "ClankerTV/1.0" },
+      signal: AbortSignal.timeout(12000),
+    });
+    if (!upstream.ok) throw new Error(`Upstream ${upstream.status}`);
+    const raw: RawListResponse = await upstream.json();
+    res.json({
+      data: (raw.data ?? []).map(mapToken),
+      page: raw.page ?? page,
+      limit: raw.limit ?? limit,
+      total: raw.total ?? raw.data?.length ?? 0,
+    });
+  } catch (err) {
+    res.status(502).json({ error: "Failed to fetch token data" });
+  }
+}
