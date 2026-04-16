@@ -344,6 +344,93 @@
   }
   .howto-note b { color: var(--acid); font-weight: 600; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; }
 
+  /* ─── LEGAL DISCLAIMER ─── */
+  .legal-section {
+    background: var(--void);
+    border-bottom: 1px solid var(--line2);
+    padding: 0 16px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .legal-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    cursor: pointer;
+    user-select: none;
+    border: none;
+    background: transparent;
+    width: 100%;
+    font-family: var(--mono);
+  }
+  .legal-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--amber);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .legal-label::before {
+    content: '!';
+    width: 14px;
+    height: 14px;
+    border: 1px solid var(--amber);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    color: var(--amber);
+  }
+  .legal-caret {
+    font-size: 9px;
+    color: var(--text3);
+    transition: transform 0.2s;
+  }
+  .legal-caret.open { transform: rotate(180deg); }
+  .legal-body {
+    display: none;
+    padding-bottom: 14px;
+  }
+  .legal-body.open { display: block; }
+  .legal-block {
+    border: 1px solid rgba(255,184,0,0.2);
+    background: rgba(255,184,0,0.03);
+    padding: 12px;
+    margin-bottom: 8px;
+  }
+  .legal-block-title {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .legal-block-text {
+    font-family: var(--sans);
+    font-size: 10px;
+    color: var(--text2);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+  .legal-nfa {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border: 1px solid rgba(255,51,88,0.3);
+    background: rgba(255,51,88,0.04);
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--red);
+    line-height: 1.6;
+    letter-spacing: 0.5px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
   /* ─── MAINNET STATUS ─── */
   .mainnet-bar {
     background: var(--void);
@@ -379,6 +466,53 @@
   }
   .mchip.live { color: var(--acid); border-color: rgba(0,255,102,0.25); background: var(--acid-ghost); }
   .mchip.mock { color: var(--amber); border-color: rgba(255,184,0,0.2); background: rgba(255,184,0,0.04); }
+
+  /* ─── CACHE STATUS ─── */
+  .cache-bar {
+    background: var(--void);
+    border-bottom: 1px solid var(--line2);
+    padding: 5px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .cache-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 8px;
+    color: var(--text3);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .cache-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--text3);
+    animation: pulse-dot 2s infinite;
+  }
+  .cache-dot.fresh { background: var(--acid); }
+  .cache-dot.stale { background: var(--amber); }
+  @keyframes pulse-dot {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .cache-refresh {
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text2);
+    background: transparent;
+    border: 1px solid var(--line2);
+    padding: 3px 8px;
+    cursor: pointer;
+    font-family: var(--mono);
+    transition: all 0.15s;
+  }
+  .cache-refresh:hover { color: var(--acid); border-color: var(--acid); }
+  .cache-refresh:disabled { opacity: 0.4; cursor: not-allowed; }
 
   /* ─── FILTERS ─── */
   .filter-bar {
@@ -603,6 +737,30 @@
   }
   .soc-link:hover { color: var(--acid); border-color: var(--acid-dim); }
 
+  /* ─── LOADING SPINNER ─── */
+  .loading-state {
+    padding: 40px 16px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  .spinner {
+    width: 24px; height: 24px;
+    border: 2px solid var(--line2);
+    border-top-color: var(--acid);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text {
+    font-size: 10px;
+    color: var(--text2);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
   /* ─── BOTTOM NAV ─── */
   .bottom-nav {
     position: fixed;
@@ -640,6 +798,41 @@
     font-size: 14px;
     line-height: 1;
   }
+
+  /* ─── FOOTER / BUILT BY ─── */
+  .footer {
+    background: var(--deep);
+    border-top: 1px solid var(--line2);
+    padding: 14px 16px;
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .footer-built {
+    font-size: 9px;
+    color: var(--text3);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .footer-built a {
+    color: var(--acid);
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.15s;
+  }
+  .footer-built a:hover { opacity: 0.7; }
+  .footer-nfa {
+    margin-top: 6px;
+    font-size: 8px;
+    color: var(--text3);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+  .footer-nfa span { color: var(--red); }
 
   /* ─── TOAST ─── */
   .toast {
@@ -679,24 +872,7 @@
 <!-- TICKER -->
 <div class="ticker">
   <div class="ticker-track" id="tickerTrack">
-    <div class="ticker-item"><span class="t-sym">UPONLY</span><span class="t-up">+61.6%</span></div>
-    <div class="ticker-item"><span class="t-sym">VOLM</span><span class="t-up">+31.4%</span></div>
-    <div class="ticker-item"><span class="t-sym">AC</span><span class="t-up">+165.6%</span></div>
-    <div class="ticker-item"><span class="t-sym">LUME</span><span class="t-dn">-26.2%</span></div>
-    <div class="ticker-item"><span class="t-sym">SHARP</span><span class="t-dn">-48.1%</span></div>
-    <div class="ticker-item"><span class="t-sym">OpenBet</span><span class="t-up">+1432.3%</span></div>
-    <div class="ticker-item"><span class="t-sym">DRB</span><span class="t-dn">-6.0%</span></div>
-    <div class="ticker-item"><span class="t-sym">CHARMS</span><span class="t-dn">-78.9%</span></div>
-    <div class="ticker-item"><span class="t-sym">XCHAT</span><span class="t-up">+16202%</span></div>
-    <div class="ticker-item"><span class="t-sym">UPONLY</span><span class="t-up">+61.6%</span></div>
-    <div class="ticker-item"><span class="t-sym">VOLM</span><span class="t-up">+31.4%</span></div>
-    <div class="ticker-item"><span class="t-sym">AC</span><span class="t-up">+165.6%</span></div>
-    <div class="ticker-item"><span class="t-sym">LUME</span><span class="t-dn">-26.2%</span></div>
-    <div class="ticker-item"><span class="t-sym">SHARP</span><span class="t-dn">-48.1%</span></div>
-    <div class="ticker-item"><span class="t-sym">OpenBet</span><span class="t-up">+1432.3%</span></div>
-    <div class="ticker-item"><span class="t-sym">DRB</span><span class="t-dn">-6.0%</span></div>
-    <div class="ticker-item"><span class="t-sym">CHARMS</span><span class="t-dn">-78.9%</span></div>
-    <div class="ticker-item"><span class="t-sym">XCHAT</span><span class="t-up">+16202%</span></div>
+    <div class="ticker-item"><span class="t-sym">LOADING</span><span class="t-up">···</span></div>
   </div>
 </div>
 
@@ -722,19 +898,19 @@
     </div>
     <div class="stats-grid">
       <div class="stat-cell">
-        <div class="stat-n">$8.5B</div>
+        <div class="stat-n" id="statVol">—</div>
         <div class="stat-l">VOL</div>
       </div>
       <div class="stat-cell">
-        <div class="stat-n">247</div>
+        <div class="stat-n" id="statTkn">—</div>
         <div class="stat-l">TKN</div>
       </div>
       <div class="stat-cell">
-        <div class="stat-n">$2.9M</div>
+        <div class="stat-n" id="stat24h">—</div>
         <div class="stat-l">24H</div>
       </div>
       <div class="stat-cell">
-        <div class="stat-n">12</div>
+        <div class="stat-n" id="statNew">—</div>
         <div class="stat-l">NEW</div>
       </div>
     </div>
@@ -772,11 +948,54 @@
         </div>
         <div class="howto-step">
           <span class="howto-num">06</span>
-          <span class="howto-text"><b>Data freshness</b> — a <span style="color:var(--acid);font-family:var(--mono);font-size:10px;">●</span> green dot = live mainnet data · <span style="color:var(--amber);font-family:var(--mono);font-size:10px;">●</span> amber dot = demo/mock data, not yet connected to live feed.</span>
+          <span class="howto-text"><b>CACHE</b> — data is cached for 60 seconds. Hit <b>REFRESH</b> in the cache bar to force a new fetch from clanker.world.</span>
+        </div>
+        <div class="howto-step">
+          <span class="howto-num">07</span>
+          <span class="howto-text"><b>Data freshness</b> — a <span style="color:var(--acid);font-family:var(--mono);font-size:10px;">●</span> green dot = live mainnet data · <span style="color:var(--amber);font-family:var(--mono);font-size:10px;">●</span> amber dot = cached / fallback data.</span>
         </div>
       </div>
       <div class="howto-note">
-        <b>Note</b> — This is a UI prototype. Price &amp; volume data is currently hardcoded (mock). Integrate a live API (e.g. DexScreener, GeckoTerminal, or Clanker's own feed) to replace static values with real mainnet data.
+        <b>Data Source</b> — Token data is fetched live from <b>clanker.world</b> API. Prices, volume and market cap reflect on-chain mainnet data. Cache TTL: 60s. If the API is unreachable, fallback demo data is shown.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LEGAL DISCLAIMER -->
+<div style="background:var(--deep);border-bottom:1px solid var(--line2);">
+  <div class="legal-section">
+    <button class="legal-toggle" id="legalToggle" onclick="toggleLegal()">
+      <span class="legal-label">LEGAL &amp; DISCLAIMER</span>
+      <span class="legal-caret" id="legalCaret">▼</span>
+    </button>
+    <div class="legal-body" id="legalBody">
+      <div class="legal-block">
+        <div class="legal-block-title">⚠ Not Financial Advice</div>
+        <div class="legal-block-text">
+          ClankerTV is an informational tool only. Nothing on this platform constitutes financial advice, investment advice, trading advice, or any other type of advice. You should not treat any information displayed here as a basis for making financial decisions.
+        </div>
+      </div>
+      <div class="legal-block">
+        <div class="legal-block-title">Risk Disclosure</div>
+        <div class="legal-block-text">
+          Cryptocurrency and token trading involves substantial risk of loss and is not suitable for every investor. Prices are highly volatile and past performance is not indicative of future results. You may lose all of your invested capital. Always do your own research (DYOR) before engaging with any token.
+        </div>
+      </div>
+      <div class="legal-block">
+        <div class="legal-block-title">Data Accuracy</div>
+        <div class="legal-block-text">
+          Data is sourced from clanker.world and third-party providers. While we strive for accuracy, we make no guarantees regarding completeness, timeliness, or correctness of any data displayed. Always verify data independently before making decisions.
+        </div>
+      </div>
+      <div class="legal-block">
+        <div class="legal-block-title">No Affiliation</div>
+        <div class="legal-block-text">
+          ClankerTV is an independent community tool. It is not affiliated with, endorsed by, or connected to Clanker, Farcaster, Base, Solana, or any token project listed. Token names, logos, and links are the property of their respective owners.
+        </div>
+      </div>
+      <div class="legal-nfa">
+        ⚠ THIS IS NOT FINANCIAL ADVICE · DYOR · TRADE AT YOUR OWN RISK
       </div>
     </div>
   </div>
@@ -785,13 +1004,18 @@
 <!-- MAINNET STATUS BAR -->
 <div style="background:var(--void);border-bottom:1px solid var(--line2);padding:7px 16px;display:flex;align-items:center;gap:10px;">
   <span class="mbar-label">DATA STATUS</span>
-  <div class="mbar-chips">
-    <span class="mchip mock">PRICE · MOCK</span>
-    <span class="mchip mock">VOL · MOCK</span>
-    <span class="mchip mock">MCAP · MOCK</span>
-    <span class="mchip live">CHAIN · LIVE</span>
-    <span class="mchip live">SOCIAL LINKS · LIVE</span>
+  <div class="mbar-chips" id="statusChips">
+    <span class="mchip mock">LOADING···</span>
   </div>
+</div>
+
+<!-- CACHE BAR -->
+<div class="cache-bar">
+  <div class="cache-info">
+    <div class="cache-dot" id="cacheDot"></div>
+    <span id="cacheStatus">FETCHING DATA···</span>
+  </div>
+  <button class="cache-refresh" id="refreshBtn" onclick="forceRefresh()">↺ REFRESH</button>
 </div>
 
 <!-- FILTERS -->
@@ -807,11 +1031,24 @@
 <!-- SECTION HEAD -->
 <div class="sec-head">
   <span class="sec-title" id="secTitle">TRENDING NOW</span>
-  <span class="sec-count" id="secCount">10 TOKENS</span>
+  <span class="sec-count" id="secCount">— TOKENS</span>
 </div>
 
 <!-- TOKEN LIST -->
-<div class="token-list" id="tokenList"></div>
+<div class="token-list" id="tokenList">
+  <div class="loading-state">
+    <div class="spinner"></div>
+    <div class="loading-text">Fetching from clanker.world···</div>
+  </div>
+</div>
+
+<!-- FOOTER / BUILT BY -->
+<div class="footer">
+  <div class="footer-built">
+    Built by <a href="https://x.com/arthousebase" target="_blank" rel="noopener">@arthousebase</a>
+  </div>
+  <div class="footer-nfa"><span>⚠ NOT FINANCIAL ADVICE</span> · FOR INFORMATIONAL PURPOSES ONLY · DYOR</div>
+</div>
 
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
@@ -822,32 +1059,215 @@
 </div>
 
 <!-- TOAST -->
-<div class="toast" id="toast">
+<div class="toast" id="toast" style="display:none;">
   <div class="toast-pulse"></div>
-  <div class="toast-body">
-    <strong>NEW ↑ OPENBET</strong><br>
-    Launched on Base<br>
-    +1432% · 1.2k holders
+  <div class="toast-body" id="toastBody">
+    <strong>NEW TOKEN</strong><br>
+    Launched on Base
   </div>
 </div>
 
 <script>
-// ─── TOKEN DATA
-// datastatus: 'mock' = hardcoded demo, 'live' = would be real mainnet feed
-// All price/vol/mcap/liq values are MOCK (static). Chain & social links are real.
-const TOKENS = [
-  { name:'OpenBet',       sym:'OpenBet',  chain:'base',   price:'$0.00132',   chg:'+1432.3%', up:true,  mcap:'$132.4k', vol:'$156.8k', liq:'$45.2k',  holders:'1.2k',  fc:'openbet',        tw:'openbet',    tag:'hot',  datastatus:'mock' },
-  { name:'Agent Conductor',sym:'AC',      chain:'base',   price:'$0.00209',   chg:'+165.6%',  up:true,  mcap:'$209.2k', vol:'$330.1k', liq:'$88.7k',  holders:'3.4k',  fc:'agentconductor', tw:'',           tag:'hot',  datastatus:'mock' },
-  { name:'UPONLY',        sym:'UPONLY',   chain:'base',   price:'$0.00237',   chg:'+61.6%',   up:true,  mcap:'$237.1k', vol:'$678.0k', liq:'$120k',   holders:'5.6k',  fc:'uponly',         tw:'uponly',     tag:'',     datastatus:'mock' },
-  { name:'VOLM',          sym:'VOLM',    chain:'solana', price:'$0.00745',   chg:'+31.4%',   up:true,  mcap:'$744.6k', vol:'$425.4k', liq:'$200k',   holders:'8.1k',  fc:'',               tw:'volmtoken',  tag:'',     datastatus:'mock' },
-  { name:'XChat',         sym:'XCHAT',   chain:'base',   price:'$0.000037',  chg:'+16202%',  up:true,  mcap:'$37.6k',  vol:'$89.2k',  liq:'$12k',    holders:'420',   fc:'xchat',          tw:'',           tag:'new',  datastatus:'mock' },
-  { name:'Openbet Sol',   sym:'OPENBET', chain:'solana', price:'$0.000635',  chg:'+172.9%',  up:true,  mcap:'$63.5k',  vol:'$44.1k',  liq:'$18k',    holders:'788',   fc:'',               tw:'openbetsol', tag:'new',  datastatus:'mock' },
-  { name:'Lume Agent',    sym:'LUME',    chain:'base',   price:'$0.000228',  chg:'-26.2%',   up:false, mcap:'$22.8k',  vol:'$417.6k', liq:'$33k',    holders:'2.1k',  fc:'lumeagent',      tw:'lumeagent',  tag:'',     datastatus:'mock' },
-  { name:'Sharp World',   sym:'SHARP',   chain:'base',   price:'$0.000123',  chg:'-48.1%',   up:false, mcap:'$122.8k', vol:'$186.7k', liq:'$41k',    holders:'1.9k',  fc:'',               tw:'sharpworld', tag:'',     datastatus:'mock' },
-  { name:'DebtReliefBot', sym:'DRB',     chain:'solana', price:'$0.0081',    chg:'-6.0%',    up:false, mcap:'$8.1M',   vol:'$74.5k',  liq:'$580k',   holders:'14.2k', fc:'bankr',          tw:'bankr',      tag:'',     datastatus:'mock' },
-  { name:'Charms',        sym:'CHARMS',  chain:'base',   price:'$0.000229',  chg:'-78.9%',   up:false, mcap:'$22.9k',  vol:'$69.7k',  liq:'$9k',     holders:'312',   fc:'',               tw:'charmstoken',tag:'',     datastatus:'mock' },
+// ─── CACHE LAYER ───────────────────────────────────────────────────
+const CACHE_TTL = 60 * 1000; // 60 seconds
+const CACHE_KEY = 'clankertv_tokens';
+const CACHE_TS_KEY = 'clankertv_ts';
+
+let TOKENS = [];
+let currentFilter = 'all';
+
+function getCached() {
+  try {
+    const ts = parseInt(sessionStorage.getItem(CACHE_TS_KEY) || '0');
+    const now = Date.now();
+    if (now - ts < CACHE_TTL) {
+      const raw = sessionStorage.getItem(CACHE_KEY);
+      if (raw) return { data: JSON.parse(raw), age: now - ts, fresh: true };
+    }
+  } catch(e) {}
+  return null;
+}
+
+function setCache(data) {
+  try {
+    sessionStorage.setItem(CACHE_KEY, JSON.stringify(data));
+    sessionStorage.setItem(CACHE_TS_KEY, Date.now().toString());
+  } catch(e) {}
+}
+
+function clearCache() {
+  sessionStorage.removeItem(CACHE_KEY);
+  sessionStorage.removeItem(CACHE_TS_KEY);
+}
+
+function updateCacheBar(fresh, ageMs, isLoading) {
+  const dot = document.getElementById('cacheDot');
+  const status = document.getElementById('cacheStatus');
+  const btn = document.getElementById('refreshBtn');
+  if (isLoading) {
+    dot.className = 'cache-dot';
+    status.textContent = 'FETCHING FROM CLANKER.WORLD···';
+    btn.disabled = true;
+    return;
+  }
+  btn.disabled = false;
+  if (fresh) {
+    const secs = Math.round(ageMs / 1000);
+    dot.className = 'cache-dot fresh';
+    status.textContent = `CACHED · ${secs}S AGO · LIVE FROM CLANKER.WORLD`;
+  } else {
+    dot.className = 'cache-dot stale';
+    status.textContent = 'CACHE EXPIRED · FETCHING···';
+  }
+}
+
+// ─── CLANKER.WORLD API FETCH ────────────────────────────────────────
+// Clanker.world public API endpoint for trending tokens
+async function fetchFromClanker() {
+  updateCacheBar(false, 0, true);
+
+  // Try clanker.world API endpoints
+  const endpoints = [
+    'https://clanker.world/api/tokens?sort=volume&limit=25',
+    'https://clanker.world/api/tokens/trending?limit=25',
+    'https://api.clanker.world/tokens?sort=trending&limit=25',
+  ];
+
+  for (const url of endpoints) {
+    try {
+      const res = await fetch(url, {
+        headers: { 'Accept': 'application/json' },
+        signal: AbortSignal.timeout(8000)
+      });
+      if (!res.ok) continue;
+      const json = await res.json();
+      const mapped = mapClankerResponse(json);
+      if (mapped && mapped.length > 0) {
+        setCache(mapped);
+        return { data: mapped, source: 'live' };
+      }
+    } catch(e) {
+      // try next endpoint
+    }
+  }
+
+  // Try DexScreener as fallback for Clanker tokens on Base
+  try {
+    const res = await fetch('https://api.dexscreener.com/latest/dex/search?q=clanker', {
+      signal: AbortSignal.timeout(8000)
+    });
+    if (res.ok) {
+      const json = await res.json();
+      const mapped = mapDexScreenerResponse(json);
+      if (mapped && mapped.length > 0) {
+        setCache(mapped);
+        return { data: mapped, source: 'dexscreener' };
+      }
+    }
+  } catch(e) {}
+
+  return null;
+}
+
+function mapClankerResponse(json) {
+  // Handle various clanker.world API response shapes
+  const arr = json.tokens || json.data || json.results || (Array.isArray(json) ? json : null);
+  if (!arr || !arr.length) return null;
+
+  return arr.slice(0, 25).map(t => {
+    const priceUsd = parseFloat(t.priceUsd || t.price_usd || t.price || 0);
+    const chgPct = parseFloat(t.priceChange24h || t.price_change_24h || t.change24h || 0);
+    const vol24h = parseFloat(t.volume24h || t.vol_24h || t.volume || 0);
+    const mcap = parseFloat(t.marketCap || t.market_cap || t.fdv || 0);
+    const liq = parseFloat(t.liquidity || t.liquidityUsd || 0);
+    const holders = parseInt(t.holders || t.holderCount || t.holder_count || 0);
+
+    return {
+      name: t.name || t.tokenName || 'Unknown',
+      sym: (t.symbol || t.ticker || '???').toUpperCase(),
+      chain: (t.chain || t.network || 'base').toLowerCase().includes('sol') ? 'solana' : 'base',
+      price: priceUsd > 0 ? '$' + formatPrice(priceUsd) : 'N/A',
+      chg: (chgPct >= 0 ? '+' : '') + chgPct.toFixed(1) + '%',
+      up: chgPct >= 0,
+      mcap: mcap > 0 ? '$' + formatCompact(mcap) : 'N/A',
+      vol: vol24h > 0 ? '$' + formatCompact(vol24h) : 'N/A',
+      liq: liq > 0 ? '$' + formatCompact(liq) : 'N/A',
+      holders: holders > 0 ? formatCompact(holders) : '—',
+      fc: t.farcasterHandle || t.fc_handle || t.castHash || '',
+      tw: t.twitterHandle || t.twitter || t.x_handle || '',
+      clankerSlug: t.slug || t.address || t.contractAddress || '',
+      dex: t.dexScreenerUrl || t.dex_url || '',
+      tag: chgPct > 500 ? 'hot' : (isNew(t) ? 'new' : ''),
+      datastatus: 'live'
+    };
+  });
+}
+
+function mapDexScreenerResponse(json) {
+  const pairs = json.pairs || [];
+  const basePairs = pairs.filter(p =>
+    p.chainId === 'base' && p.dexId && p.baseToken
+  ).slice(0, 20);
+
+  return basePairs.map(p => {
+    const chgPct = parseFloat(p.priceChange?.h24 || 0);
+    return {
+      name: p.baseToken.name || 'Unknown',
+      sym: (p.baseToken.symbol || '???').toUpperCase(),
+      chain: p.chainId === 'solana' ? 'solana' : 'base',
+      price: p.priceUsd ? '$' + formatPrice(parseFloat(p.priceUsd)) : 'N/A',
+      chg: (chgPct >= 0 ? '+' : '') + chgPct.toFixed(1) + '%',
+      up: chgPct >= 0,
+      mcap: p.fdv ? '$' + formatCompact(p.fdv) : 'N/A',
+      vol: p.volume?.h24 ? '$' + formatCompact(p.volume.h24) : 'N/A',
+      liq: p.liquidity?.usd ? '$' + formatCompact(p.liquidity.usd) : 'N/A',
+      holders: '—',
+      fc: '',
+      tw: '',
+      clankerSlug: p.baseToken.address || '',
+      dex: p.url || '',
+      tag: chgPct > 500 ? 'hot' : '',
+      datastatus: 'live'
+    };
+  });
+}
+
+function isNew(t) {
+  const created = t.createdAt || t.created_at || t.deployedAt || t.deployed_at;
+  if (!created) return false;
+  const age = Date.now() - new Date(created).getTime();
+  return age < 24 * 60 * 60 * 1000;
+}
+
+// ─── FALLBACK DEMO DATA ─────────────────────────────────────────────
+const FALLBACK_TOKENS = [
+  { name:'OpenBet',       sym:'OPENBET', chain:'base',   price:'$0.00132',  chg:'+1432.3%', up:true,  mcap:'$132.4k', vol:'$156.8k', liq:'$45.2k',  holders:'1.2k',  fc:'openbet',        tw:'openbet',    tag:'hot', datastatus:'mock', clankerSlug:'', dex:'' },
+  { name:'Agent Conductor',sym:'AC',    chain:'base',   price:'$0.00209',  chg:'+165.6%',  up:true,  mcap:'$209.2k', vol:'$330.1k', liq:'$88.7k',  holders:'3.4k',  fc:'agentconductor', tw:'',           tag:'hot', datastatus:'mock', clankerSlug:'', dex:'' },
+  { name:'UPONLY',        sym:'UPONLY', chain:'base',   price:'$0.00237',  chg:'+61.6%',   up:true,  mcap:'$237.1k', vol:'$678.0k', liq:'$120k',   holders:'5.6k',  fc:'uponly',         tw:'uponly',     tag:'',    datastatus:'mock', clankerSlug:'', dex:'' },
+  { name:'VOLM',          sym:'VOLM',  chain:'solana', price:'$0.00745',  chg:'+31.4%',   up:true,  mcap:'$744.6k', vol:'$425.4k', liq:'$200k',   holders:'8.1k',  fc:'',               tw:'volmtoken',  tag:'',    datastatus:'mock', clankerSlug:'', dex:'' },
+  { name:'XChat',         sym:'XCHAT', chain:'base',   price:'$0.000037', chg:'+16202%',  up:true,  mcap:'$37.6k',  vol:'$89.2k',  liq:'$12k',    holders:'420',   fc:'xchat',          tw:'',           tag:'new', datastatus:'mock', clankerSlug:'', dex:'' },
+  { name:'Lume Agent',    sym:'LUME',  chain:'base',   price:'$0.000228', chg:'-26.2%',   up:false, mcap:'$22.8k',  vol:'$417.6k', liq:'$33k',    holders:'2.1k',  fc:'lumeagent',      tw:'lumeagent',  tag:'',    datastatus:'mock', clankerSlug:'', dex:'' },
+  { name:'Sharp World',   sym:'SHARP', chain:'base',   price:'$0.000123', chg:'-48.1%',   up:false, mcap:'$122.8k', vol:'$186.7k', liq:'$41k',    holders:'1.9k',  fc:'',               tw:'sharpworld', tag:'',    datastatus:'mock', clankerSlug:'', dex:'' },
+  { name:'DebtReliefBot', sym:'DRB',   chain:'solana', price:'$0.0081',   chg:'-6.0%',    up:false, mcap:'$8.1M',   vol:'$74.5k',  liq:'$580k',   holders:'14.2k', fc:'bankr',          tw:'bankr',      tag:'',    datastatus:'mock', clankerSlug:'', dex:'' },
+  { name:'Charms',        sym:'CHARMS',chain:'base',   price:'$0.000229', chg:'-78.9%',   up:false, mcap:'$22.9k',  vol:'$69.7k',  liq:'$9k',     holders:'312',   fc:'',               tw:'charmstoken',tag:'',    datastatus:'mock', clankerSlug:'', dex:'' },
 ];
 
+// ─── FORMAT HELPERS ─────────────────────────────────────────────────
+function formatPrice(n) {
+  if (n >= 1) return n.toFixed(2);
+  if (n >= 0.01) return n.toFixed(4);
+  if (n >= 0.0001) return n.toFixed(6);
+  return n.toExponential(2);
+}
+
+function formatCompact(n) {
+  if (n >= 1e9) return (n/1e9).toFixed(1) + 'B';
+  if (n >= 1e6) return (n/1e6).toFixed(1) + 'M';
+  if (n >= 1e3) return (n/1e3).toFixed(1) + 'k';
+  return n.toFixed(0);
+}
+
+// ─── RENDER ─────────────────────────────────────────────────────────
 function render(tokens) {
   const list = document.getElementById('tokenList');
   document.getElementById('secCount').textContent = tokens.length + ' TOKENS';
@@ -864,7 +1284,7 @@ function render(tokens) {
             <span class="row-sym">$${t.sym}</span>
             ${t.tag === 'hot' ? '<span class="row-badge hot">HOT</span>' : ''}
             ${t.tag === 'new' ? '<span class="row-badge new">NEW</span>' : ''}
-            <span class="row-datastatus ${t.datastatus}" title="${t.datastatus === 'live' ? 'Live mainnet data' : 'Mock / demo data'}"></span>
+            <span class="row-datastatus ${t.datastatus}" title="${t.datastatus === 'live' ? 'Live data from clanker.world' : 'Demo / fallback data'}"></span>
           </div>
           <div class="row-name">${t.name}</div>
           <span class="row-chain ${t.chain}">${t.chain === 'base' ? 'BASE' : 'SOLANA'}</span>
@@ -881,29 +1301,141 @@ function render(tokens) {
         <div class="mini"><div class="mini-v">${t.liq}</div><div class="mini-l">LIQ</div></div>
       </div>
       <div class="row-social">
-        ${t.fc ? `<a href="https://warpcast.com/${t.fc}" target="_blank" class="soc-link">FC</a>` : ''}
-        ${t.tw ? `<a href="https://x.com/${t.tw}" target="_blank" class="soc-link">X</a>` : ''}
-        <a href="https://clanker.world" target="_blank" class="soc-link">CLANKER</a>
-        <a href="https://dexscreener.com" target="_blank" class="soc-link">CHART</a>
+        ${t.fc ? `<a href="https://warpcast.com/${t.fc}" target="_blank" rel="noopener" class="soc-link">FC</a>` : ''}
+        ${t.tw ? `<a href="https://x.com/${t.tw}" target="_blank" rel="noopener" class="soc-link">X</a>` : ''}
+        <a href="https://clanker.world${t.clankerSlug ? '/token/'+t.clankerSlug : ''}" target="_blank" rel="noopener" class="soc-link">CLANKER</a>
+        <a href="${t.dex || 'https://dexscreener.com/base'}" target="_blank" rel="noopener" class="soc-link">CHART</a>
       </div>
     </div>
   `).join('');
+}
+
+function updateTicker(tokens) {
+  const track = document.getElementById('tickerTrack');
+  if (!tokens.length) return;
+  const items = [...tokens, ...tokens].map(t =>
+    `<div class="ticker-item"><span class="t-sym">${t.sym}</span><span class="${t.up ? 't-up' : 't-dn'}">${t.chg}</span></div>`
+  ).join('');
+  track.innerHTML = items;
+}
+
+function updateStatusChips(source) {
+  const chips = document.getElementById('statusChips');
+  if (source === 'live') {
+    chips.innerHTML = `
+      <span class="mchip live">PRICE · LIVE</span>
+      <span class="mchip live">VOL · LIVE</span>
+      <span class="mchip live">MCAP · LIVE</span>
+      <span class="mchip live">CHAIN · LIVE</span>
+      <span class="mchip live">SOURCE · CLANKER.WORLD</span>
+    `;
+  } else if (source === 'dexscreener') {
+    chips.innerHTML = `
+      <span class="mchip live">PRICE · LIVE</span>
+      <span class="mchip live">VOL · LIVE</span>
+      <span class="mchip live">MCAP · LIVE</span>
+      <span class="mchip mock">SOURCE · DEXSCREENER FALLBACK</span>
+    `;
+  } else {
+    chips.innerHTML = `
+      <span class="mchip mock">PRICE · DEMO</span>
+      <span class="mchip mock">VOL · DEMO</span>
+      <span class="mchip mock">MCAP · DEMO</span>
+      <span class="mchip mock">API · UNREACHABLE</span>
+    `;
+  }
+}
+
+function updateStats(tokens) {
+  const totalVol = tokens.reduce((s,t) => {
+    const v = parseFloat((t.vol||'').replace(/[$,BMkK]/g, m => ({B:'e9',M:'e6',k:'e3',K:'e3'}[m]||'')));
+    return s + (isNaN(v)?0:v);
+  }, 0);
+  document.getElementById('statVol').textContent = totalVol > 0 ? '$' + formatCompact(totalVol) : '—';
+  document.getElementById('statTkn').textContent = tokens.length;
+  const gainers = tokens.filter(t => t.up).length;
+  document.getElementById('stat24h').textContent = gainers > 0 ? '+' + gainers : '—';
+  const newCount = tokens.filter(t => t.tag === 'new').length;
+  document.getElementById('statNew').textContent = newCount;
+}
+
+// ─── MAIN LOAD ───────────────────────────────────────────────────────
+async function loadTokens(force = false) {
+  if (!force) {
+    const cached = getCached();
+    if (cached) {
+      TOKENS = cached.data;
+      const source = TOKENS[0]?.datastatus === 'live' ? 'live' : 'fallback';
+      updateCacheBar(true, cached.age, false);
+      updateStatusChips(source);
+      updateStats(TOKENS);
+      render(filterTokens(TOKENS, currentFilter));
+      updateTicker(TOKENS);
+      return;
+    }
+  }
+
+  document.getElementById('tokenList').innerHTML = `
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <div class="loading-text">Fetching from clanker.world···</div>
+    </div>`;
+
+  const result = await fetchFromClanker();
+
+  if (result && result.data.length > 0) {
+    TOKENS = result.data;
+    updateCacheBar(true, 0, false);
+    updateStatusChips(result.source);
+    // Show toast for newest hot token
+    const hot = TOKENS.find(t => t.tag === 'hot');
+    if (hot) showToast(hot);
+  } else {
+    TOKENS = FALLBACK_TOKENS;
+    updateCacheBar(false, 0, false);
+    document.getElementById('cacheStatus').textContent = 'API UNREACHABLE · SHOWING DEMO DATA';
+    document.getElementById('cacheDot').className = 'cache-dot stale';
+    updateStatusChips('fallback');
+  }
+
+  updateStats(TOKENS);
+  render(filterTokens(TOKENS, currentFilter));
+  updateTicker(TOKENS);
+}
+
+function forceRefresh() {
+  clearCache();
+  loadTokens(true);
+}
+
+function showToast(token) {
+  const toast = document.getElementById('toast');
+  const body = document.getElementById('toastBody');
+  body.innerHTML = `<strong>NEW ↑ ${token.sym}</strong><br>Launched on ${token.chain.toUpperCase()}<br>${token.chg} · ${token.holders} holders`;
+  toast.style.display = 'flex';
+  setTimeout(() => { toast.style.display = 'none'; }, 5200);
+}
+
+// ─── FILTER ──────────────────────────────────────────────────────────
+function filterTokens(tokens, type) {
+  if (type === 'base') return tokens.filter(t => t.chain === 'base');
+  if (type === 'solana') return tokens.filter(t => t.chain === 'solana');
+  if (type === 'new') return tokens.filter(t => t.tag === 'new');
+  if (type === 'trending') return tokens.filter(t => t.up);
+  if (type === 'watchlist') return [];
+  return tokens;
 }
 
 const LABELS = { all:'TRENDING NOW', base:'BASE TOKENS', solana:'SOLANA TOKENS', new:'NEW LAUNCHES', trending:'TRENDING UP', watchlist:'WATCHLIST' };
 function setFilter(btn, type) {
   document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
+  currentFilter = type;
   document.getElementById('secTitle').textContent = LABELS[type] || 'TOKENS';
-  let f = TOKENS;
-  if (type === 'base') f = TOKENS.filter(t => t.chain === 'base');
-  else if (type === 'solana') f = TOKENS.filter(t => t.chain === 'solana');
-  else if (type === 'new') f = TOKENS.filter(t => t.tag === 'new');
-  else if (type === 'trending') f = TOKENS.filter(t => t.up);
-  else if (type === 'watchlist') f = [];
-  render(f);
+  render(filterTokens(TOKENS, type));
 }
 
+// ─── UI HELPERS ──────────────────────────────────────────────────────
 document.querySelectorAll('.bnav').forEach(b => {
   b.addEventListener('click', function() {
     document.querySelectorAll('.bnav').forEach(x => x.classList.remove('on'));
@@ -911,7 +1443,6 @@ document.querySelectorAll('.bnav').forEach(b => {
   });
 });
 
-// theme toggle
 let dark = true;
 document.getElementById('themeBtn').addEventListener('click', function() {
   dark = !dark;
@@ -919,7 +1450,6 @@ document.getElementById('themeBtn').addEventListener('click', function() {
   this.textContent = dark ? 'DARK' : 'LITE';
 });
 
-// howto accordion
 function toggleHowto() {
   const body = document.getElementById('howtoBody');
   const caret = document.getElementById('howtoCaret');
@@ -927,13 +1457,21 @@ function toggleHowto() {
   caret.classList.toggle('open', open);
 }
 
-// hide toast
-setTimeout(() => {
-  const t = document.getElementById('toast');
-  if (t) t.style.display = 'none';
-}, 5200);
+function toggleLegal() {
+  const body = document.getElementById('legalBody');
+  const caret = document.getElementById('legalCaret');
+  const open = body.classList.toggle('open');
+  caret.classList.toggle('open', open);
+}
 
-render(TOKENS);
+// ─── AUTO-REFRESH every 60s ─────────────────────────────────────────
+setInterval(() => {
+  clearCache();
+  loadTokens(true);
+}, CACHE_TTL);
+
+// ─── INIT ────────────────────────────────────────────────────────────
+loadTokens();
 </script>
 </body>
 </html>
