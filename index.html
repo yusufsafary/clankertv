@@ -14,18 +14,17 @@
     --deep: #070c11;
     --surface: #0b1018;
     --panel: #0f1620;
-    --line: rgba(0,255,102,0.08);
-    --line2: rgba(0,255,102,0.15);
+    --line: rgba(0,255,102,0.07);
+    --line2: rgba(0,255,102,0.13);
     --acid: #00ff66;
-    --acid-dim: rgba(0,255,102,0.55);
-    --acid-ghost: rgba(0,255,102,0.06);
+    --acid-dim: rgba(0,255,102,0.45);
+    --acid-ghost: rgba(0,255,102,0.05);
     --red: #ff3358;
-    --red-dim: rgba(255,51,88,0.55);
     --amber: #ffb800;
     --text: #c8d8c2;
-    --text2: #5a7a5e;
-    --text3: #2d4530;
-    --dim: rgba(200,216,194,0.35);
+    --text2: #4a6a4e;
+    --text3: #243828;
+    --dim: rgba(200,216,194,0.3);
     --mono: 'IBM Plex Mono', monospace;
     --sans: 'IBM Plex Sans', sans-serif;
   }
@@ -45,21 +44,20 @@
   .ticker {
     background: var(--deep);
     border-bottom: 1px solid var(--line2);
-    height: 28px;
+    height: 26px;
     overflow: hidden;
     display: flex;
     align-items: center;
     position: relative;
   }
-  .ticker::before {
-    content: 'LIVE';
+  .ticker-live {
     position: absolute;
     left: 0;
     height: 100%;
-    width: 48px;
+    width: 44px;
     background: var(--acid);
     color: var(--void);
-    font-size: 9px;
+    font-size: 8px;
     font-weight: 700;
     letter-spacing: 1.5px;
     display: flex;
@@ -73,18 +71,17 @@
     gap: 0;
     animation: scroll 30s linear infinite;
     white-space: nowrap;
-    padding-left: 48px;
+    padding-left: 44px;
   }
   .ticker-item {
     font-size: 10px;
-    padding: 0 16px;
+    padding: 0 14px;
     display: flex;
     align-items: center;
-    gap: 7px;
+    gap: 6px;
     border-right: 1px solid var(--line);
-    letter-spacing: 0.3px;
   }
-  .t-sym { color: var(--text); font-weight: 600; }
+  .t-sym { color: var(--text); font-weight: 600; letter-spacing: 0.3px; }
   .t-up { color: var(--acid); }
   .t-dn { color: var(--red); }
   @keyframes scroll {
@@ -97,8 +94,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 16px;
-    height: 48px;
+    padding: 0 14px;
+    height: 44px;
     background: var(--deep);
     border-bottom: 1px solid var(--line2);
     position: sticky;
@@ -108,12 +105,13 @@
   .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 9px;
     text-decoration: none;
   }
+  /* LOGO UNCHANGED */
   .logo-mark {
-    width: 26px;
-    height: 26px;
+    width: 24px;
+    height: 24px;
     border: 1.5px solid var(--acid);
     display: flex;
     align-items: center;
@@ -128,369 +126,61 @@
     background: var(--acid);
   }
   .logo-text {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     color: var(--text);
     letter-spacing: 2px;
     text-transform: uppercase;
   }
   .logo-text b { color: var(--acid); font-weight: 700; }
+
   .nav-right {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
   }
-  .nav-tag {
-    font-size: 9px;
+  .nav-btn {
+    font-family: var(--mono);
+    font-size: 8px;
     font-weight: 600;
     letter-spacing: 1.5px;
-    color: var(--text2);
     text-transform: uppercase;
-    padding: 4px 8px;
+    padding: 4px 9px;
     border: 1px solid var(--line2);
+    background: transparent;
+    color: var(--text2);
     cursor: pointer;
     transition: all 0.15s;
-    background: transparent;
-    font-family: var(--mono);
   }
-  .nav-tag:hover, .nav-tag.active {
-    color: var(--acid);
-    border-color: var(--acid);
-    background: var(--acid-ghost);
-  }
-  .nav-connect {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
+  .nav-btn:hover { color: var(--acid); border-color: var(--acid); background: var(--acid-ghost); }
+  .nav-btn.accent {
     color: var(--void);
     background: var(--acid);
-    border: none;
-    padding: 6px 12px;
-    cursor: pointer;
-    font-family: var(--mono);
-    transition: opacity 0.15s;
+    border-color: var(--acid);
   }
-  .nav-connect:hover { opacity: 0.8; }
+  .nav-btn.accent:hover { opacity: 0.85; }
 
-  /* ─── HEADER ─── */
-  .header {
-    background: var(--deep);
-    border-bottom: 1px solid var(--line2);
-    padding: 20px 16px 16px;
-    position: relative;
-    overflow: hidden;
-  }
-  .header-grid {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 16px;
-    align-items: start;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  .header-label {
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    color: var(--text2);
-    text-transform: uppercase;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .header-label::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    background: var(--acid);
-    display: inline-block;
-  }
-  .header-title {
-    font-family: var(--mono);
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--text);
-    line-height: 1.1;
-    letter-spacing: -0.5px;
-  }
-  .header-title span { color: var(--acid); }
-  .header-sub {
-    font-family: var(--sans);
-    font-size: 12px;
-    color: var(--text2);
-    margin-top: 8px;
-    line-height: 1.5;
-    font-weight: 300;
-  }
-
-  /* stats grid */
-  .stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: var(--line2);
-    border: 1px solid var(--line2);
-    min-width: 140px;
-  }
-  .stat-cell {
-    background: var(--deep);
-    padding: 8px 10px;
-    text-align: right;
-  }
-  .stat-n {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--acid);
-    letter-spacing: -0.3px;
-  }
-  .stat-l {
-    font-size: 8px;
-    color: var(--text2);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-top: 2px;
-  }
-
-  /* ─── HOW TO ─── */
-  .howto {
-    background: var(--void);
-    border-bottom: 1px solid var(--line2);
-    padding: 0 16px;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  .howto-toggle {
+  /* ─── STATUS STRIP (minimal single line) ─── */
+  .status-strip {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 0;
-    cursor: pointer;
-    user-select: none;
-    border: none;
-    background: transparent;
-    width: 100%;
-    font-family: var(--mono);
-  }
-  .howto-label {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: var(--text2);
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .howto-label::before {
-    content: '?';
-    width: 14px;
-    height: 14px;
-    border: 1px solid var(--text3);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 9px;
-    color: var(--text3);
-  }
-  .howto-caret {
-    font-size: 9px;
-    color: var(--text3);
-    transition: transform 0.2s;
-  }
-  .howto-caret.open { transform: rotate(180deg); }
-  .howto-body {
-    display: none;
-    padding-bottom: 14px;
-  }
-  .howto-body.open { display: block; }
-  .howto-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .howto-step {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-  }
-  .howto-num {
-    font-size: 9px;
-    font-weight: 700;
-    color: var(--acid);
-    width: 16px;
-    flex-shrink: 0;
-    padding-top: 1px;
-  }
-  .howto-text {
-    font-family: var(--sans);
-    font-size: 11px;
-    color: var(--text2);
-    line-height: 1.5;
-    font-weight: 300;
-  }
-  .howto-text b { color: var(--text); font-weight: 500; font-family: var(--mono); font-size: 10px; }
-  .howto-note {
-    margin-top: 10px;
-    padding: 8px 10px;
-    border: 1px solid var(--line2);
-    background: var(--acid-ghost);
-    font-family: var(--sans);
-    font-size: 10px;
-    color: var(--text2);
-    line-height: 1.5;
-    font-weight: 300;
-  }
-  .howto-note b { color: var(--acid); font-weight: 600; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; }
-
-  /* ─── LEGAL DISCLAIMER ─── */
-  .legal-section {
+    padding: 0 14px;
+    height: 28px;
     background: var(--void);
     border-bottom: 1px solid var(--line2);
-    padding: 0 16px;
-    max-width: 600px;
-    margin: 0 auto;
   }
-  .legal-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 0;
-    cursor: pointer;
-    user-select: none;
-    border: none;
-    background: transparent;
-    width: 100%;
-    font-family: var(--mono);
-  }
-  .legal-label {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: var(--amber);
-    text-transform: uppercase;
+  .status-left {
     display: flex;
     align-items: center;
     gap: 8px;
-  }
-  .legal-label::before {
-    content: '!';
-    width: 14px;
-    height: 14px;
-    border: 1px solid var(--amber);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 9px;
-    color: var(--amber);
-  }
-  .legal-caret {
-    font-size: 9px;
-    color: var(--text3);
-    transition: transform 0.2s;
-  }
-  .legal-caret.open { transform: rotate(180deg); }
-  .legal-body {
-    display: none;
-    padding-bottom: 14px;
-  }
-  .legal-body.open { display: block; }
-  .legal-block {
-    border: 1px solid rgba(255,184,0,0.2);
-    background: rgba(255,184,0,0.03);
-    padding: 12px;
-    margin-bottom: 8px;
-  }
-  .legal-block-title {
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: var(--amber);
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-  .legal-block-text {
-    font-family: var(--sans);
-    font-size: 10px;
-    color: var(--text2);
-    line-height: 1.6;
-    font-weight: 300;
-  }
-  .legal-nfa {
-    margin-top: 10px;
-    padding: 10px 12px;
-    border: 1px solid rgba(255,51,88,0.3);
-    background: rgba(255,51,88,0.04);
-    font-family: var(--mono);
-    font-size: 9px;
-    color: var(--red);
-    line-height: 1.6;
-    letter-spacing: 0.5px;
-    text-align: center;
-    text-transform: uppercase;
-  }
-
-  /* ─── MAINNET STATUS ─── */
-  .mainnet-bar {
-    background: var(--void);
-    border-bottom: 1px solid var(--line2);
-    padding: 8px 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    max-width: 600px;
-    margin: 0 auto;
-    width: 100%;
-  }
-  .mbar-label {
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    color: var(--text3);
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-  .mbar-chips {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-  .mchip {
-    font-size: 8px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    padding: 2px 7px;
-    border: 1px solid;
-    text-transform: uppercase;
-  }
-  .mchip.live { color: var(--acid); border-color: rgba(0,255,102,0.25); background: var(--acid-ghost); }
-  .mchip.mock { color: var(--amber); border-color: rgba(255,184,0,0.2); background: rgba(255,184,0,0.04); }
-
-  /* ─── CACHE STATUS ─── */
-  .cache-bar {
-    background: var(--void);
-    border-bottom: 1px solid var(--line2);
-    padding: 5px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-  }
-  .cache-info {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 8px;
-    color: var(--text3);
-    letter-spacing: 1px;
-    text-transform: uppercase;
   }
   .cache-dot {
     width: 5px; height: 5px;
     border-radius: 50%;
     background: var(--text3);
     animation: pulse-dot 2s infinite;
+    flex-shrink: 0;
   }
   .cache-dot.fresh { background: var(--acid); }
   .cache-dot.stale { background: var(--amber); }
@@ -498,37 +188,94 @@
     0%,100% { opacity: 1; }
     50% { opacity: 0.4; }
   }
-  .cache-refresh {
+  .status-text {
     font-size: 8px;
+    color: var(--text3);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .status-chips {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+  .mchip {
+    font-size: 7px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    padding: 2px 6px;
+    border: 1px solid;
+    text-transform: uppercase;
+  }
+  .mchip.live { color: var(--acid); border-color: rgba(0,255,102,0.2); background: var(--acid-ghost); }
+  .mchip.mock { color: var(--amber); border-color: rgba(255,184,0,0.18); background: rgba(255,184,0,0.03); }
+  .cache-refresh {
+    font-family: var(--mono);
+    font-size: 7px;
     font-weight: 600;
     letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--text2);
     background: transparent;
     border: 1px solid var(--line2);
-    padding: 3px 8px;
+    padding: 2px 7px;
     cursor: pointer;
-    font-family: var(--mono);
     transition: all 0.15s;
+    height: 20px;
+    display: flex;
+    align-items: center;
   }
   .cache-refresh:hover { color: var(--acid); border-color: var(--acid); }
-  .cache-refresh:disabled { opacity: 0.4; cursor: not-allowed; }
+  .cache-refresh:disabled { opacity: 0.3; cursor: not-allowed; }
 
-  /* ─── FILTERS ─── */
+  /* ─── STATS BAR (compact single row) ─── */
+  .stats-bar {
+    display: flex;
+    align-items: stretch;
+    background: var(--deep);
+    border-bottom: 1px solid var(--line2);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .stats-bar::-webkit-scrollbar { display: none; }
+  .stat-cell {
+    flex: 1;
+    min-width: 72px;
+    padding: 8px 12px;
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .stat-cell:last-child { border-right: none; }
+  .stat-n {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--acid);
+    letter-spacing: -0.3px;
+    line-height: 1;
+  }
+  .stat-l {
+    font-size: 7px;
+    color: var(--text3);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ─── FILTER BAR ─── */
   .filter-bar {
     display: flex;
-    gap: 0;
-    padding: 0 16px;
     background: var(--surface);
     border-bottom: 1px solid var(--line2);
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
   }
   .filter-bar::-webkit-scrollbar { display: none; }
   .f-btn {
     font-family: var(--mono);
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 600;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -536,26 +283,18 @@
     background: transparent;
     border: none;
     border-right: 1px solid var(--line);
-    padding: 10px 14px;
+    border-bottom: 2px solid transparent;
+    padding: 9px 13px;
     cursor: pointer;
     white-space: nowrap;
-    transition: all 0.15s;
+    transition: all 0.12s;
     display: flex;
     align-items: center;
     gap: 5px;
-    border-bottom: 2px solid transparent;
   }
   .f-btn:hover { color: var(--text); }
-  .f-btn.on {
-    color: var(--acid);
-    border-bottom-color: var(--acid);
-    background: var(--acid-ghost);
-  }
-  .f-dot {
-    width: 5px; height: 5px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
+  .f-btn.on { color: var(--acid); border-bottom-color: var(--acid); background: var(--acid-ghost); }
+  .f-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
   .f-dot.base { background: #0052ff; }
   .f-dot.sol { background: #9945ff; }
 
@@ -564,30 +303,29 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 16px;
+    padding: 7px 14px;
     border-bottom: 1px solid var(--line);
     background: var(--surface);
   }
   .sec-title {
-    font-size: 9px;
+    font-size: 8px;
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--text2);
   }
   .sec-count {
-    font-size: 9px;
+    font-size: 8px;
     color: var(--text3);
     letter-spacing: 1px;
   }
 
   /* ─── TOKEN LIST ─── */
-  .token-list { padding-bottom: 72px; }
+  .token-list { padding-bottom: 58px; }
 
   .token-row {
     display: flex;
     flex-direction: column;
-    gap: 0;
     border-bottom: 1px solid var(--line);
     background: var(--surface);
     cursor: pointer;
@@ -604,89 +342,93 @@
     transition: background 0.15s;
   }
   .token-row:hover { background: var(--panel); }
-  .token-row:hover::before { background: var(--acid); }
+  .token-row:hover::before { background: var(--acid-dim); }
   .token-row.tag-hot::before { background: var(--amber); }
   .token-row.tag-new::before { background: var(--acid); }
 
   .row-main {
     display: flex;
     align-items: center;
-    padding: 11px 16px 7px 18px;
+    padding: 10px 14px 6px 16px;
     gap: 10px;
   }
   .row-idx {
-    font-size: 9px;
+    font-size: 8px;
     color: var(--text3);
     width: 14px;
     flex-shrink: 0;
-    letter-spacing: 0.5px;
+  }
+  .row-info { flex: 1; min-width: 0; }
+  .row-top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
   }
   .row-sym {
     font-size: 13px;
     font-weight: 700;
     color: var(--text);
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
     line-height: 1;
+  }
+  .row-badge {
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 1px 5px;
+  }
+  .row-badge.hot { color: var(--amber); border: 1px solid rgba(255,184,0,0.3); }
+  .row-badge.new { color: var(--acid); border: 1px solid rgba(0,255,102,0.3); }
+  .row-datastatus {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    align-self: center;
+  }
+  .row-datastatus.live { background: var(--acid); }
+  .row-datastatus.mock { background: var(--amber); }
+  .row-bottom {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 3px;
   }
   .row-name {
     font-family: var(--sans);
     font-size: 10px;
     color: var(--text2);
-    margin-top: 2px;
     font-weight: 300;
   }
   .row-chain {
-    font-size: 8px;
+    font-size: 7px;
     font-weight: 700;
-    letter-spacing: 1px;
-    padding: 2px 5px;
+    letter-spacing: 0.8px;
+    padding: 1px 4px;
     border: 1px solid;
-    margin-top: 4px;
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
   }
-  .row-chain.base { color: #0052ff; border-color: rgba(0,82,255,0.3); }
-  .row-chain.solana { color: #9945ff; border-color: rgba(153,69,255,0.3); }
-  .row-badge {
+  .row-chain.base { color: #0052ff; border-color: rgba(0,82,255,0.25); }
+  .row-chain.solana { color: #9945ff; border-color: rgba(153,69,255,0.25); }
+  .row-holders {
     font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    padding: 2px 6px;
-    margin-left: 6px;
-    align-self: flex-start;
+    color: var(--text3);
+    letter-spacing: 0.3px;
   }
-  .row-badge.hot { color: var(--amber); border: 1px solid rgba(255,184,0,0.3); background: rgba(255,184,0,0.05); }
-  .row-badge.new { color: var(--acid); border: 1px solid rgba(0,255,102,0.3); background: var(--acid-ghost); }
-
-  /* data status dot */
-  .row-datastatus {
-    width: 5px; height: 5px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    margin-left: 4px;
-    margin-top: 3px;
-    align-self: flex-start;
-  }
-  .row-datastatus.live { background: var(--acid); }
-  .row-datastatus.mock { background: var(--amber); }
-
   .row-price-col {
     margin-left: auto;
     text-align: right;
     flex-shrink: 0;
   }
   .row-price {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     color: var(--text);
     letter-spacing: 0.2px;
   }
   .row-chg {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     margin-top: 2px;
-    letter-spacing: 0.3px;
   }
   .row-chg.up { color: var(--acid); }
   .row-chg.dn { color: var(--red); }
@@ -695,24 +437,23 @@
     display: grid;
     grid-template-columns: repeat(3,1fr);
     border-top: 1px solid var(--line);
-    margin: 0 18px;
+    margin: 0 16px;
   }
   .mini {
-    padding: 5px 0;
+    padding: 4px 0;
     text-align: center;
     border-right: 1px solid var(--line);
   }
   .mini:last-child { border-right: none; }
   .mini-v {
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 600;
     color: var(--dim);
-    letter-spacing: 0.2px;
   }
   .mini-l {
-    font-size: 8px;
+    font-size: 7px;
     color: var(--text3);
-    letter-spacing: 1px;
+    letter-spacing: 0.8px;
     text-transform: uppercase;
     margin-top: 1px;
   }
@@ -720,11 +461,11 @@
   .row-social {
     display: flex;
     gap: 0;
-    padding: 6px 18px;
+    padding: 5px 16px;
     border-top: 1px solid var(--line);
   }
   .soc-link {
-    font-size: 9px;
+    font-size: 8px;
     font-weight: 600;
     letter-spacing: 1.5px;
     text-transform: uppercase;
@@ -737,17 +478,53 @@
   }
   .soc-link:hover { color: var(--acid); border-color: var(--acid-dim); }
 
-  /* ─── LOADING SPINNER ─── */
+  /* watchlist star */
+  .soc-watch {
+    font-size: 10px;
+    margin-left: auto;
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--text3);
+    padding: 2px 8px;
+    cursor: pointer;
+    font-family: var(--mono);
+    transition: all 0.12s;
+  }
+  .soc-watch:hover, .soc-watch.on { color: var(--amber); border-color: rgba(255,184,0,0.4); }
+
+  /* ─── WATCHLIST EMPTY ─── */
+  .watchlist-empty {
+    padding: 40px 16px;
+    text-align: center;
+  }
+  .watchlist-empty-ico { font-size: 24px; margin-bottom: 10px; color: var(--text3); }
+  .watchlist-empty-title {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--text2);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .watchlist-empty-sub {
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--text3);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  /* ─── LOADING ─── */
   .loading-state {
     padding: 40px 16px;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
   }
   .spinner {
-    width: 24px; height: 24px;
+    width: 20px; height: 20px;
     border: 2px solid var(--line2);
     border-top-color: var(--acid);
     border-radius: 50%;
@@ -755,7 +532,7 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
   .loading-text {
-    font-size: 10px;
+    font-size: 9px;
     color: var(--text2);
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -770,7 +547,7 @@
     display: grid;
     grid-template-columns: repeat(4,1fr);
     z-index: 100;
-    height: 56px;
+    height: 52px;
   }
   .bnav {
     background: transparent;
@@ -778,7 +555,7 @@
     border-right: 1px solid var(--line);
     color: var(--text2);
     font-family: var(--mono);
-    font-size: 8px;
+    font-size: 7px;
     font-weight: 600;
     letter-spacing: 1.5px;
     text-transform: uppercase;
@@ -794,21 +571,17 @@
   .bnav:last-child { border-right: none; }
   .bnav.on { color: var(--acid); background: var(--acid-ghost); }
   .bnav:hover:not(.on) { color: var(--text); }
-  .bnav-ico {
-    font-size: 14px;
-    line-height: 1;
-  }
+  .bnav-ico { font-size: 13px; line-height: 1; }
 
-  /* ─── FOOTER / BUILT BY ─── */
+  /* ─── FOOTER ─── */
   .footer {
     background: var(--deep);
     border-top: 1px solid var(--line2);
-    padding: 14px 16px;
-    text-align: center;
-    margin-bottom: 56px;
+    padding: 12px 14px;
+    margin-bottom: 52px;
   }
   .footer-built {
-    font-size: 9px;
+    font-size: 8px;
     color: var(--text3);
     letter-spacing: 1.5px;
     text-transform: uppercase;
@@ -816,53 +589,164 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
+    margin-bottom: 8px;
   }
-  .footer-built a {
-    color: var(--acid);
-    text-decoration: none;
-    font-weight: 600;
-    transition: opacity 0.15s;
-  }
+  .footer-built a { color: var(--acid); text-decoration: none; font-weight: 600; }
   .footer-built a:hover { opacity: 0.7; }
   .footer-nfa {
-    margin-top: 6px;
-    font-size: 8px;
+    font-size: 7px;
     color: var(--text3);
     letter-spacing: 1px;
     text-transform: uppercase;
+    text-align: center;
     line-height: 1.6;
+    margin-bottom: 10px;
   }
   .footer-nfa span { color: var(--red); }
+
+  /* ─── COLLAPSIBLE (howto + legal) ─── */
+  .collapse-section {
+    border-top: 1px solid var(--line2);
+  }
+  .collapse-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 14px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    width: 100%;
+    font-family: var(--mono);
+  }
+  .collapse-label {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .collapse-label.howto-lbl { color: var(--text2); }
+  .collapse-label.legal-lbl { color: var(--amber); }
+  .collapse-caret { font-size: 8px; color: var(--text3); transition: transform 0.2s; }
+  .collapse-caret.open { transform: rotate(180deg); }
+  .collapse-body { display: none; padding: 0 14px 12px; }
+  .collapse-body.open { display: block; }
+
+  .howto-steps { display: flex; flex-direction: column; gap: 7px; }
+  .howto-step { display: flex; gap: 10px; align-items: flex-start; }
+  .howto-num { font-size: 8px; font-weight: 700; color: var(--acid); width: 14px; flex-shrink: 0; padding-top: 2px; }
+  .howto-text { font-family: var(--sans); font-size: 11px; color: var(--text2); line-height: 1.5; font-weight: 300; }
+  .howto-text b { color: var(--text); font-weight: 500; font-family: var(--mono); font-size: 9px; }
+  .howto-note { margin-top: 8px; padding: 7px 9px; border: 1px solid var(--line2); background: var(--acid-ghost); font-family: var(--sans); font-size: 10px; color: var(--text2); line-height: 1.5; font-weight: 300; }
+  .howto-note b { color: var(--acid); font-weight: 600; font-size: 8px; letter-spacing: 1px; text-transform: uppercase; }
+
+  .legal-block { border: 1px solid rgba(255,184,0,0.15); background: rgba(255,184,0,0.02); padding: 10px; margin-bottom: 7px; }
+  .legal-block-title { font-size: 7px; font-weight: 700; letter-spacing: 2px; color: var(--amber); text-transform: uppercase; margin-bottom: 5px; }
+  .legal-block-text { font-family: var(--sans); font-size: 10px; color: var(--text2); line-height: 1.6; font-weight: 300; }
+  .legal-nfa { padding: 8px 10px; border: 1px solid rgba(255,51,88,0.25); background: rgba(255,51,88,0.03); font-family: var(--mono); font-size: 8px; color: var(--red); line-height: 1.6; letter-spacing: 0.5px; text-align: center; text-transform: uppercase; }
 
   /* ─── TOAST ─── */
   .toast {
     position: fixed;
-    bottom: 68px;
-    right: 12px;
+    bottom: 62px;
+    right: 10px;
     background: var(--panel);
     border: 1px solid var(--acid);
-    padding: 10px 12px;
+    padding: 9px 11px;
     display: flex;
     align-items: flex-start;
-    gap: 8px;
-    max-width: 220px;
+    gap: 7px;
+    max-width: 210px;
     animation: tin 0.3s ease, tout 0.4s 4.6s ease forwards;
     z-index: 200;
-    box-shadow: 0 0 20px rgba(0,255,102,0.1);
+    box-shadow: 0 0 16px rgba(0,255,102,0.08);
   }
-  .toast-pulse {
-    width: 6px; height: 6px;
-    background: var(--acid);
-    flex-shrink: 0;
-    margin-top: 3px;
-  }
-  .toast-body { font-size: 10px; color: var(--text); line-height: 1.5; }
-  .toast-body strong { color: var(--acid); font-size: 9px; letter-spacing: 1px; }
-  @keyframes tin { from { opacity:0; transform:translateX(12px); } to { opacity:1; transform:none; } }
+  .toast-pulse { width: 5px; height: 5px; background: var(--acid); flex-shrink: 0; margin-top: 3px; }
+  .toast-body { font-size: 9px; color: var(--text); line-height: 1.5; }
+  .toast-body strong { color: var(--acid); font-size: 8px; letter-spacing: 1px; }
+  @keyframes tin { from { opacity:0; transform:translateX(10px); } to { opacity:1; transform:none; } }
   @keyframes tout { to { opacity:0; pointer-events:none; } }
 
+  /* ─── ALERTS MODAL ─── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(4,6,10,0.85);
+    z-index: 300;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    display: none;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--deep);
+    border: 1px solid var(--line2);
+    border-bottom: none;
+    width: 100%;
+    max-width: 480px;
+    padding: 20px 16px 28px;
+  }
+  .modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .modal-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  .modal-close {
+    background: transparent;
+    border: 1px solid var(--line2);
+    color: var(--text2);
+    font-family: var(--mono);
+    font-size: 9px;
+    padding: 3px 8px;
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .modal-close:hover { color: var(--red); border-color: var(--red); }
+  .modal-sub { font-family: var(--sans); font-size: 11px; color: var(--text2); font-weight: 300; line-height: 1.5; margin-bottom: 14px; }
+  .modal-input-row { display: flex; gap: 6px; }
+  .modal-input {
+    flex: 1;
+    font-family: var(--mono);
+    font-size: 11px;
+    background: var(--surface);
+    border: 1px solid var(--line2);
+    color: var(--text);
+    padding: 8px 10px;
+    outline: none;
+    transition: border 0.15s;
+  }
+  .modal-input:focus { border-color: var(--acid); }
+  .modal-submit {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--void);
+    background: var(--acid);
+    border: none;
+    padding: 0 14px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    white-space: nowrap;
+  }
+  .modal-submit:hover { opacity: 0.85; }
+  .modal-note { font-size: 8px; color: var(--text3); letter-spacing: 0.8px; margin-top: 10px; line-height: 1.5; }
+
   /* ─── SCROLLBAR ─── */
-  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar { width: 3px; }
   ::-webkit-scrollbar-track { background: var(--void); }
   ::-webkit-scrollbar-thumb { background: var(--text3); }
 </style>
@@ -871,6 +755,7 @@
 
 <!-- TICKER -->
 <div class="ticker">
+  <div class="ticker-live">LIVE</div>
   <div class="ticker-track" id="tickerTrack">
     <div class="ticker-item"><span class="t-sym">LOADING</span><span class="t-up">···</span></div>
   </div>
@@ -883,139 +768,43 @@
     <span class="logo-text">CLANKER<b>TV</b></span>
   </a>
   <div class="nav-right">
-    <button class="nav-tag" id="themeBtn">DARK</button>
-    <button class="nav-connect">ALERTS</button>
+    <button class="nav-btn" id="themeBtn">DARK</button>
+    <button class="nav-btn accent" id="alertsBtn">ALERTS</button>
   </div>
 </nav>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="header-grid">
-    <div>
-      <div class="header-label">ALPHA DISCOVERY · BASE &amp; SOLANA</div>
-      <div class="header-title">TOKEN<br><span>TERMINAL</span></div>
-      <div class="header-sub">Real-time signals for tokens launched on Clanker. No noise.</div>
-    </div>
-    <div class="stats-grid">
-      <div class="stat-cell">
-        <div class="stat-n" id="statVol">—</div>
-        <div class="stat-l">VOL</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-n" id="statTkn">—</div>
-        <div class="stat-l">TKN</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-n" id="stat24h">—</div>
-        <div class="stat-l">24H</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-n" id="statNew">—</div>
-        <div class="stat-l">NEW</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- HOW TO -->
-<div style="background:var(--deep);border-bottom:1px solid var(--line2);">
-  <div class="howto">
-    <button class="howto-toggle" id="howtoToggle" onclick="toggleHowto()">
-      <span class="howto-label">HOW TO USE</span>
-      <span class="howto-caret" id="howtoCaret">▼</span>
-    </button>
-    <div class="howto-body" id="howtoBody">
-      <div class="howto-steps">
-        <div class="howto-step">
-          <span class="howto-num">01</span>
-          <span class="howto-text"><b>FILTER</b> by chain (BASE / SOL) or status (NEW · TRENDING · WATCHLIST) using the tab bar below.</span>
-        </div>
-        <div class="howto-step">
-          <span class="howto-num">02</span>
-          <span class="howto-text"><b>TAP a token row</b> to expand details — MCAP, VOL 24H, and liquidity are shown inline per token.</span>
-        </div>
-        <div class="howto-step">
-          <span class="howto-num">03</span>
-          <span class="howto-text"><b>FC / X / CHART links</b> open Warpcast, Twitter/X, and DexScreener for that token directly.</span>
-        </div>
-        <div class="howto-step">
-          <span class="howto-num">04</span>
-          <span class="howto-text"><b>CLANKER link</b> takes you to the token's page on clanker.world to buy or track on-chain.</span>
-        </div>
-        <div class="howto-step">
-          <span class="howto-num">05</span>
-          <span class="howto-text"><b>ALERTS button</b> (top right) — connect to receive push alerts when new hot tokens launch.</span>
-        </div>
-        <div class="howto-step">
-          <span class="howto-num">06</span>
-          <span class="howto-text"><b>CACHE</b> — data is cached for 60 seconds. Hit <b>REFRESH</b> in the cache bar to force a new fetch from clanker.world.</span>
-        </div>
-        <div class="howto-step">
-          <span class="howto-num">07</span>
-          <span class="howto-text"><b>Data freshness</b> — a <span style="color:var(--acid);font-family:var(--mono);font-size:10px;">●</span> green dot = live mainnet data · <span style="color:var(--amber);font-family:var(--mono);font-size:10px;">●</span> amber dot = cached / fallback data.</span>
-        </div>
-      </div>
-      <div class="howto-note">
-        <b>Data Source</b> — Token data is fetched live from <b>clanker.world</b> API. Prices, volume and market cap reflect on-chain mainnet data. Cache TTL: 60s. If the API is unreachable, fallback demo data is shown.
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- LEGAL DISCLAIMER -->
-<div style="background:var(--deep);border-bottom:1px solid var(--line2);">
-  <div class="legal-section">
-    <button class="legal-toggle" id="legalToggle" onclick="toggleLegal()">
-      <span class="legal-label">LEGAL &amp; DISCLAIMER</span>
-      <span class="legal-caret" id="legalCaret">▼</span>
-    </button>
-    <div class="legal-body" id="legalBody">
-      <div class="legal-block">
-        <div class="legal-block-title">⚠ Not Financial Advice</div>
-        <div class="legal-block-text">
-          ClankerTV is an informational tool only. Nothing on this platform constitutes financial advice, investment advice, trading advice, or any other type of advice. You should not treat any information displayed here as a basis for making financial decisions.
-        </div>
-      </div>
-      <div class="legal-block">
-        <div class="legal-block-title">Risk Disclosure</div>
-        <div class="legal-block-text">
-          Cryptocurrency and token trading involves substantial risk of loss and is not suitable for every investor. Prices are highly volatile and past performance is not indicative of future results. You may lose all of your invested capital. Always do your own research (DYOR) before engaging with any token.
-        </div>
-      </div>
-      <div class="legal-block">
-        <div class="legal-block-title">Data Accuracy</div>
-        <div class="legal-block-text">
-          Data is sourced from clanker.world and third-party providers. While we strive for accuracy, we make no guarantees regarding completeness, timeliness, or correctness of any data displayed. Always verify data independently before making decisions.
-        </div>
-      </div>
-      <div class="legal-block">
-        <div class="legal-block-title">No Affiliation</div>
-        <div class="legal-block-text">
-          ClankerTV is an independent community tool. It is not affiliated with, endorsed by, or connected to Clanker, Farcaster, Base, Solana, or any token project listed. Token names, logos, and links are the property of their respective owners.
-        </div>
-      </div>
-      <div class="legal-nfa">
-        ⚠ THIS IS NOT FINANCIAL ADVICE · DYOR · TRADE AT YOUR OWN RISK
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MAINNET STATUS BAR -->
-<div style="background:var(--void);border-bottom:1px solid var(--line2);padding:7px 16px;display:flex;align-items:center;gap:10px;">
-  <span class="mbar-label">DATA STATUS</span>
-  <div class="mbar-chips" id="statusChips">
-    <span class="mchip mock">LOADING···</span>
-  </div>
-</div>
-
-<!-- CACHE BAR -->
-<div class="cache-bar">
-  <div class="cache-info">
+<!-- STATUS STRIP -->
+<div class="status-strip">
+  <div class="status-left">
     <div class="cache-dot" id="cacheDot"></div>
-    <span id="cacheStatus">FETCHING DATA···</span>
+    <span class="status-text" id="cacheStatus">FETCHING···</span>
   </div>
-  <button class="cache-refresh" id="refreshBtn" onclick="forceRefresh()">↺ REFRESH</button>
+  <div style="display:flex;align-items:center;gap:6px;">
+    <div class="status-chips" id="statusChips">
+      <span class="mchip mock">LOADING</span>
+    </div>
+    <button class="cache-refresh" id="refreshBtn" onclick="forceRefresh()">↺ REFRESH</button>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-cell">
+    <div class="stat-n" id="statVol">—</div>
+    <div class="stat-l">VOL 24H</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-n" id="statTkn">—</div>
+    <div class="stat-l">TOKENS</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-n" id="stat24h">—</div>
+    <div class="stat-l">GAINERS</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-n" id="statNew">—</div>
+    <div class="stat-l">NEW</div>
+  </div>
 </div>
 
 <!-- FILTERS -->
@@ -1025,7 +814,7 @@
   <button class="f-btn" onclick="setFilter(this,'solana')"><span class="f-dot sol"></span>SOL</button>
   <button class="f-btn" onclick="setFilter(this,'new')">NEW</button>
   <button class="f-btn" onclick="setFilter(this,'trending')">TRENDING</button>
-  <button class="f-btn" onclick="setFilter(this,'watchlist')">WATCHLIST</button>
+  <button class="f-btn" onclick="setFilter(this,'watchlist')">★ WATCH</button>
 </div>
 
 <!-- SECTION HEAD -->
@@ -1042,39 +831,124 @@
   </div>
 </div>
 
-<!-- FOOTER / BUILT BY -->
+<!-- FOOTER -->
 <div class="footer">
-  <div class="footer-built">
-    Built by <a href="https://x.com/arthousebase" target="_blank" rel="noopener">@arthousebase</a>
+  <!-- HOW TO (moved here) -->
+  <div class="collapse-section">
+    <button class="collapse-toggle" onclick="toggleCollapse('howto')">
+      <span class="collapse-label howto-lbl">? &nbsp;HOW TO USE</span>
+      <span class="collapse-caret" id="howtoCaret">▼</span>
+    </button>
+    <div class="collapse-body" id="howtoBody">
+      <div class="howto-steps">
+        <div class="howto-step">
+          <span class="howto-num">01</span>
+          <span class="howto-text"><b>FILTER</b> by chain (BASE / SOL) or status (NEW · TRENDING · WATCHLIST) using the tab bar above.</span>
+        </div>
+        <div class="howto-step">
+          <span class="howto-num">02</span>
+          <span class="howto-text"><b>TAP a token row</b> to see MCAP, VOL 24H, and liquidity inline per token.</span>
+        </div>
+        <div class="howto-step">
+          <span class="howto-num">03</span>
+          <span class="howto-text"><b>FC / X / CHART</b> links open Warpcast, Twitter/X, and DexScreener for that token.</span>
+        </div>
+        <div class="howto-step">
+          <span class="howto-num">04</span>
+          <span class="howto-text"><b>★ star</b> any token to add it to your WATCHLIST (saved in this browser session).</span>
+        </div>
+        <div class="howto-step">
+          <span class="howto-num">05</span>
+          <span class="howto-text"><b>ALERTS</b> — tap the green button to register for push alerts on new hot tokens.</span>
+        </div>
+        <div class="howto-step">
+          <span class="howto-num">06</span>
+          <span class="howto-text"><b>● green dot</b> = live data from clanker.world · <span style="color:var(--amber)">● amber</span> = demo/fallback data.</span>
+        </div>
+      </div>
+      <div class="howto-note">
+        <b>Data Source</b> — Fetched live from <b>clanker.world</b> API. Cache TTL: 60s. If unreachable, fallback demo data is shown.
+      </div>
+    </div>
   </div>
+
+  <!-- LEGAL (moved here) -->
+  <div class="collapse-section">
+    <button class="collapse-toggle" onclick="toggleCollapse('legal')">
+      <span class="collapse-label legal-lbl">! &nbsp;LEGAL &amp; DISCLAIMER</span>
+      <span class="collapse-caret" id="legalCaret">▼</span>
+    </button>
+    <div class="collapse-body" id="legalBody">
+      <div class="legal-block">
+        <div class="legal-block-title">⚠ Not Financial Advice</div>
+        <div class="legal-block-text">ClankerTV is an informational tool only. Nothing here constitutes financial, investment, or trading advice.</div>
+      </div>
+      <div class="legal-block">
+        <div class="legal-block-title">Risk Disclosure</div>
+        <div class="legal-block-text">Cryptocurrency trading involves substantial risk. Prices are highly volatile. You may lose all invested capital. Always DYOR.</div>
+      </div>
+      <div class="legal-block">
+        <div class="legal-block-title">Data Accuracy</div>
+        <div class="legal-block-text">Data is sourced from clanker.world and third-party providers. Always verify independently before making decisions.</div>
+      </div>
+      <div class="legal-block">
+        <div class="legal-block-title">No Affiliation</div>
+        <div class="legal-block-text">ClankerTV is an independent community tool, not affiliated with Clanker, Farcaster, Base, or Solana.</div>
+      </div>
+      <div class="legal-nfa">⚠ NOT FINANCIAL ADVICE · DYOR · TRADE AT YOUR OWN RISK</div>
+    </div>
+  </div>
+
+  <div style="height:10px;"></div>
+  <div class="footer-built">Built by <a href="https://x.com/arthousebase" target="_blank" rel="noopener">@arthousebase</a></div>
   <div class="footer-nfa"><span>⚠ NOT FINANCIAL ADVICE</span> · FOR INFORMATIONAL PURPOSES ONLY · DYOR</div>
 </div>
 
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
-  <button class="bnav on"><span class="bnav-ico">⌂</span>HOME</button>
-  <button class="bnav"><span class="bnav-ico">◎</span>SCAN</button>
-  <button class="bnav"><span class="bnav-ico">◈</span>ALERTS</button>
-  <button class="bnav"><span class="bnav-ico">★</span>WATCH</button>
+  <button class="bnav on" id="bnav-home" onclick="bnavClick(this,'home')"><span class="bnav-ico">⌂</span>HOME</button>
+  <button class="bnav" id="bnav-scan" onclick="bnavClick(this,'scan')"><span class="bnav-ico">◎</span>SCAN</button>
+  <button class="bnav" id="bnav-alerts" onclick="bnavClick(this,'alerts')"><span class="bnav-ico">◈</span>ALERTS</button>
+  <button class="bnav" id="bnav-watch" onclick="bnavClick(this,'watch')"><span class="bnav-ico">★</span>WATCH</button>
+</div>
+
+<!-- ALERTS MODAL -->
+<div class="modal-overlay" id="alertsModal">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title">◈ &nbsp;TOKEN ALERTS</span>
+      <button class="modal-close" onclick="closeModal()">✕ CLOSE</button>
+    </div>
+    <div class="modal-sub">Get notified when hot tokens launch on Clanker. Enter your email or Farcaster handle to subscribe.</div>
+    <div class="modal-input-row">
+      <input class="modal-input" id="alertInput" type="text" placeholder="email or @farcaster" autocomplete="off">
+      <button class="modal-submit" onclick="submitAlert()">SUBSCRIBE</button>
+    </div>
+    <div class="modal-note" id="alertNote">You'll receive alerts for HOT tokens (500%+ gain) and NEW launches on Base &amp; Solana.</div>
+  </div>
 </div>
 
 <!-- TOAST -->
 <div class="toast" id="toast" style="display:none;">
   <div class="toast-pulse"></div>
   <div class="toast-body" id="toastBody">
-    <strong>NEW TOKEN</strong><br>
-    Launched on Base
+    <strong>NEW TOKEN</strong><br>Launched on Base
   </div>
 </div>
 
 <script>
-// ─── CACHE LAYER ───────────────────────────────────────────────────
-const CACHE_TTL = 60 * 1000; // 60 seconds
+// ─── CACHE ───────────────────────────────────────────────────────────
+const CACHE_TTL = 60 * 1000;
 const CACHE_KEY = 'clankertv_tokens';
 const CACHE_TS_KEY = 'clankertv_ts';
 
 let TOKENS = [];
 let currentFilter = 'all';
+let watchlist = new Set(JSON.parse(sessionStorage.getItem('clankertv_watch') || '[]'));
+
+function saveWatchlist() {
+  sessionStorage.setItem('clankertv_watch', JSON.stringify([...watchlist]));
+}
 
 function getCached() {
   try {
@@ -1082,7 +956,7 @@ function getCached() {
     const now = Date.now();
     if (now - ts < CACHE_TTL) {
       const raw = sessionStorage.getItem(CACHE_KEY);
-      if (raw) return { data: JSON.parse(raw), age: now - ts, fresh: true };
+      if (raw) return { data: JSON.parse(raw), age: now - ts };
     }
   } catch(e) {}
   return null;
@@ -1104,29 +978,26 @@ function updateCacheBar(fresh, ageMs, isLoading) {
   const dot = document.getElementById('cacheDot');
   const status = document.getElementById('cacheStatus');
   const btn = document.getElementById('refreshBtn');
+  btn.disabled = isLoading;
   if (isLoading) {
     dot.className = 'cache-dot';
     status.textContent = 'FETCHING FROM CLANKER.WORLD···';
-    btn.disabled = true;
     return;
   }
-  btn.disabled = false;
   if (fresh) {
     const secs = Math.round(ageMs / 1000);
     dot.className = 'cache-dot fresh';
-    status.textContent = `CACHED · ${secs}S AGO · LIVE FROM CLANKER.WORLD`;
+    status.textContent = `CACHED · ${secs}S AGO`;
   } else {
     dot.className = 'cache-dot stale';
-    status.textContent = 'CACHE EXPIRED · FETCHING···';
+    status.textContent = 'STALE · FETCHING···';
   }
 }
 
-// ─── CLANKER.WORLD API FETCH ────────────────────────────────────────
-// Clanker.world public API endpoint for trending tokens
+// ─── API FETCH ───────────────────────────────────────────────────────
 async function fetchFromClanker() {
   updateCacheBar(false, 0, true);
 
-  // Try clanker.world API endpoints
   const endpoints = [
     'https://clanker.world/api/tokens?sort=volume&limit=25',
     'https://clanker.world/api/tokens/trending?limit=25',
@@ -1146,12 +1017,9 @@ async function fetchFromClanker() {
         setCache(mapped);
         return { data: mapped, source: 'live' };
       }
-    } catch(e) {
-      // try next endpoint
-    }
+    } catch(e) {}
   }
 
-  // Try DexScreener as fallback for Clanker tokens on Base
   try {
     const res = await fetch('https://api.dexscreener.com/latest/dex/search?q=clanker', {
       signal: AbortSignal.timeout(8000)
@@ -1170,7 +1038,6 @@ async function fetchFromClanker() {
 }
 
 function mapClankerResponse(json) {
-  // Handle various clanker.world API response shapes
   const arr = json.tokens || json.data || json.results || (Array.isArray(json) ? json : null);
   if (!arr || !arr.length) return null;
 
@@ -1193,7 +1060,7 @@ function mapClankerResponse(json) {
       vol: vol24h > 0 ? '$' + formatCompact(vol24h) : 'N/A',
       liq: liq > 0 ? '$' + formatCompact(liq) : 'N/A',
       holders: holders > 0 ? formatCompact(holders) : '—',
-      fc: t.farcasterHandle || t.fc_handle || t.castHash || '',
+      fc: t.farcasterHandle || t.fc_handle || '',
       tw: t.twitterHandle || t.twitter || t.x_handle || '',
       clankerSlug: t.slug || t.address || t.contractAddress || '',
       dex: t.dexScreenerUrl || t.dex_url || '',
@@ -1204,12 +1071,8 @@ function mapClankerResponse(json) {
 }
 
 function mapDexScreenerResponse(json) {
-  const pairs = json.pairs || [];
-  const basePairs = pairs.filter(p =>
-    p.chainId === 'base' && p.dexId && p.baseToken
-  ).slice(0, 20);
-
-  return basePairs.map(p => {
+  const pairs = (json.pairs || []).filter(p => p.chainId === 'base' && p.baseToken).slice(0, 20);
+  return pairs.map(p => {
     const chgPct = parseFloat(p.priceChange?.h24 || 0);
     return {
       name: p.baseToken.name || 'Unknown',
@@ -1222,8 +1085,7 @@ function mapDexScreenerResponse(json) {
       vol: p.volume?.h24 ? '$' + formatCompact(p.volume.h24) : 'N/A',
       liq: p.liquidity?.usd ? '$' + formatCompact(p.liquidity.usd) : 'N/A',
       holders: '—',
-      fc: '',
-      tw: '',
+      fc: '', tw: '',
       clankerSlug: p.baseToken.address || '',
       dex: p.url || '',
       tag: chgPct > 500 ? 'hot' : '',
@@ -1235,31 +1097,29 @@ function mapDexScreenerResponse(json) {
 function isNew(t) {
   const created = t.createdAt || t.created_at || t.deployedAt || t.deployed_at;
   if (!created) return false;
-  const age = Date.now() - new Date(created).getTime();
-  return age < 24 * 60 * 60 * 1000;
+  return (Date.now() - new Date(created).getTime()) < 24 * 60 * 60 * 1000;
 }
 
-// ─── FALLBACK DEMO DATA ─────────────────────────────────────────────
+// ─── FALLBACK DATA ───────────────────────────────────────────────────
 const FALLBACK_TOKENS = [
-  { name:'OpenBet',       sym:'OPENBET', chain:'base',   price:'$0.00132',  chg:'+1432.3%', up:true,  mcap:'$132.4k', vol:'$156.8k', liq:'$45.2k',  holders:'1.2k',  fc:'openbet',        tw:'openbet',    tag:'hot', datastatus:'mock', clankerSlug:'', dex:'' },
-  { name:'Agent Conductor',sym:'AC',    chain:'base',   price:'$0.00209',  chg:'+165.6%',  up:true,  mcap:'$209.2k', vol:'$330.1k', liq:'$88.7k',  holders:'3.4k',  fc:'agentconductor', tw:'',           tag:'hot', datastatus:'mock', clankerSlug:'', dex:'' },
-  { name:'UPONLY',        sym:'UPONLY', chain:'base',   price:'$0.00237',  chg:'+61.6%',   up:true,  mcap:'$237.1k', vol:'$678.0k', liq:'$120k',   holders:'5.6k',  fc:'uponly',         tw:'uponly',     tag:'',    datastatus:'mock', clankerSlug:'', dex:'' },
-  { name:'VOLM',          sym:'VOLM',  chain:'solana', price:'$0.00745',  chg:'+31.4%',   up:true,  mcap:'$744.6k', vol:'$425.4k', liq:'$200k',   holders:'8.1k',  fc:'',               tw:'volmtoken',  tag:'',    datastatus:'mock', clankerSlug:'', dex:'' },
-  { name:'XChat',         sym:'XCHAT', chain:'base',   price:'$0.000037', chg:'+16202%',  up:true,  mcap:'$37.6k',  vol:'$89.2k',  liq:'$12k',    holders:'420',   fc:'xchat',          tw:'',           tag:'new', datastatus:'mock', clankerSlug:'', dex:'' },
-  { name:'Lume Agent',    sym:'LUME',  chain:'base',   price:'$0.000228', chg:'-26.2%',   up:false, mcap:'$22.8k',  vol:'$417.6k', liq:'$33k',    holders:'2.1k',  fc:'lumeagent',      tw:'lumeagent',  tag:'',    datastatus:'mock', clankerSlug:'', dex:'' },
-  { name:'Sharp World',   sym:'SHARP', chain:'base',   price:'$0.000123', chg:'-48.1%',   up:false, mcap:'$122.8k', vol:'$186.7k', liq:'$41k',    holders:'1.9k',  fc:'',               tw:'sharpworld', tag:'',    datastatus:'mock', clankerSlug:'', dex:'' },
-  { name:'DebtReliefBot', sym:'DRB',   chain:'solana', price:'$0.0081',   chg:'-6.0%',    up:false, mcap:'$8.1M',   vol:'$74.5k',  liq:'$580k',   holders:'14.2k', fc:'bankr',          tw:'bankr',      tag:'',    datastatus:'mock', clankerSlug:'', dex:'' },
-  { name:'Charms',        sym:'CHARMS',chain:'base',   price:'$0.000229', chg:'-78.9%',   up:false, mcap:'$22.9k',  vol:'$69.7k',  liq:'$9k',     holders:'312',   fc:'',               tw:'charmstoken',tag:'',    datastatus:'mock', clankerSlug:'', dex:'' },
+  { name:'OpenBet',        sym:'OPENBET', chain:'base',   price:'$0.00132',  chg:'+1432.3%', up:true,  mcap:'$132.4k', vol:'$156.8k', liq:'$45.2k', holders:'1.2k', fc:'openbet',        tw:'openbet',     tag:'hot', datastatus:'mock', clankerSlug:'', dex:'' },
+  { name:'Agent Conductor',sym:'AC',      chain:'base',   price:'$0.00209',  chg:'+165.6%',  up:true,  mcap:'$209.2k', vol:'$330.1k', liq:'$88.7k', holders:'3.4k', fc:'agentconductor', tw:'',            tag:'hot', datastatus:'mock', clankerSlug:'', dex:'' },
+  { name:'UPONLY',         sym:'UPONLY',  chain:'base',   price:'$0.00237',  chg:'+61.6%',   up:true,  mcap:'$237.1k', vol:'$678.0k', liq:'$120k',  holders:'5.6k', fc:'uponly',         tw:'uponly',      tag:'',   datastatus:'mock', clankerSlug:'', dex:'' },
+  { name:'VOLM',           sym:'VOLM',   chain:'solana', price:'$0.00745',  chg:'+31.4%',   up:true,  mcap:'$744.6k', vol:'$425.4k', liq:'$200k',  holders:'8.1k', fc:'',               tw:'volmtoken',   tag:'',   datastatus:'mock', clankerSlug:'', dex:'' },
+  { name:'XChat',          sym:'XCHAT',  chain:'base',   price:'$0.000037', chg:'+16202%',  up:true,  mcap:'$37.6k',  vol:'$89.2k',  liq:'$12k',   holders:'420',  fc:'xchat',          tw:'',            tag:'new', datastatus:'mock', clankerSlug:'', dex:'' },
+  { name:'Lume Agent',     sym:'LUME',   chain:'base',   price:'$0.000228', chg:'-26.2%',   up:false, mcap:'$22.8k',  vol:'$417.6k', liq:'$33k',   holders:'2.1k', fc:'lumeagent',      tw:'lumeagent',   tag:'',   datastatus:'mock', clankerSlug:'', dex:'' },
+  { name:'Sharp World',    sym:'SHARP',  chain:'base',   price:'$0.000123', chg:'-48.1%',   up:false, mcap:'$122.8k', vol:'$186.7k', liq:'$41k',   holders:'1.9k', fc:'',               tw:'sharpworld',  tag:'',   datastatus:'mock', clankerSlug:'', dex:'' },
+  { name:'DebtReliefBot',  sym:'DRB',    chain:'solana', price:'$0.0081',   chg:'-6.0%',    up:false, mcap:'$8.1M',   vol:'$74.5k',  liq:'$580k',  holders:'14.2k',fc:'bankr',          tw:'bankr',       tag:'',   datastatus:'mock', clankerSlug:'', dex:'' },
+  { name:'Charms',         sym:'CHARMS', chain:'base',   price:'$0.000229', chg:'-78.9%',   up:false, mcap:'$22.9k',  vol:'$69.7k',  liq:'$9k',    holders:'312',  fc:'',               tw:'charmstoken', tag:'',   datastatus:'mock', clankerSlug:'', dex:'' },
 ];
 
-// ─── FORMAT HELPERS ─────────────────────────────────────────────────
+// ─── FORMAT ───────────────────────────────────────────────────────────
 function formatPrice(n) {
   if (n >= 1) return n.toFixed(2);
   if (n >= 0.01) return n.toFixed(4);
   if (n >= 0.0001) return n.toFixed(6);
   return n.toExponential(2);
 }
-
 function formatCompact(n) {
   if (n >= 1e9) return (n/1e9).toFixed(1) + 'B';
   if (n >= 1e6) return (n/1e6).toFixed(1) + 'M';
@@ -1267,28 +1127,41 @@ function formatCompact(n) {
   return n.toFixed(0);
 }
 
-// ─── RENDER ─────────────────────────────────────────────────────────
+// ─── RENDER ───────────────────────────────────────────────────────────
 function render(tokens) {
   const list = document.getElementById('tokenList');
   document.getElementById('secCount').textContent = tokens.length + ' TOKENS';
+
   if (!tokens.length) {
-    list.innerHTML = '<div style="padding:32px 16px;text-align:center;font-size:11px;color:var(--text3);letter-spacing:1px;">NO TOKENS FOUND</div>';
+    const isWatch = currentFilter === 'watchlist';
+    list.innerHTML = isWatch
+      ? `<div class="watchlist-empty">
+           <div class="watchlist-empty-ico">★</div>
+           <div class="watchlist-empty-title">No tokens in watchlist</div>
+           <div class="watchlist-empty-sub">Tap the ★ button on any token row to add it here.</div>
+         </div>`
+      : `<div style="padding:32px 16px;text-align:center;font-size:10px;color:var(--text3);letter-spacing:1px;">NO TOKENS FOUND</div>`;
     return;
   }
-  list.innerHTML = tokens.map((t, i) => `
+
+  list.innerHTML = tokens.map((t, i) => {
+    const inWatch = watchlist.has(t.sym);
+    return `
     <div class="token-row ${t.tag ? 'tag-'+t.tag : ''}">
       <div class="row-main">
         <span class="row-idx">${String(i+1).padStart(2,'0')}</span>
-        <div style="flex:1;min-width:0;">
-          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+        <div class="row-info">
+          <div class="row-top">
             <span class="row-sym">$${t.sym}</span>
             ${t.tag === 'hot' ? '<span class="row-badge hot">HOT</span>' : ''}
             ${t.tag === 'new' ? '<span class="row-badge new">NEW</span>' : ''}
-            <span class="row-datastatus ${t.datastatus}" title="${t.datastatus === 'live' ? 'Live data from clanker.world' : 'Demo / fallback data'}"></span>
+            <span class="row-datastatus ${t.datastatus}" title="${t.datastatus === 'live' ? 'Live data' : 'Demo data'}"></span>
           </div>
-          <div class="row-name">${t.name}</div>
-          <span class="row-chain ${t.chain}">${t.chain === 'base' ? 'BASE' : 'SOLANA'}</span>
-          <span style="font-size:9px;color:var(--text3);margin-left:8px;letter-spacing:0.5px;">${t.holders} holders</span>
+          <div class="row-bottom">
+            <span class="row-name">${t.name}</span>
+            <span class="row-chain ${t.chain}">${t.chain === 'base' ? 'BASE' : 'SOL'}</span>
+            <span class="row-holders">${t.holders} holders</span>
+          </div>
         </div>
         <div class="row-price-col">
           <div class="row-price">${t.price}</div>
@@ -1305,14 +1178,26 @@ function render(tokens) {
         ${t.tw ? `<a href="https://x.com/${t.tw}" target="_blank" rel="noopener" class="soc-link">X</a>` : ''}
         <a href="https://clanker.world${t.clankerSlug ? '/token/'+t.clankerSlug : ''}" target="_blank" rel="noopener" class="soc-link">CLANKER</a>
         <a href="${t.dex || 'https://dexscreener.com/base'}" target="_blank" rel="noopener" class="soc-link">CHART</a>
+        <button class="soc-watch ${inWatch ? 'on' : ''}" onclick="toggleWatch(event,'${t.sym}')" title="${inWatch ? 'Remove from watchlist' : 'Add to watchlist'}">★</button>
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
+}
+
+function toggleWatch(e, sym) {
+  e.stopPropagation();
+  if (watchlist.has(sym)) {
+    watchlist.delete(sym);
+  } else {
+    watchlist.add(sym);
+  }
+  saveWatchlist();
+  render(filterTokens(TOKENS, currentFilter));
 }
 
 function updateTicker(tokens) {
-  const track = document.getElementById('tickerTrack');
   if (!tokens.length) return;
+  const track = document.getElementById('tickerTrack');
   const items = [...tokens, ...tokens].map(t =>
     `<div class="ticker-item"><span class="t-sym">${t.sym}</span><span class="${t.up ? 't-up' : 't-dn'}">${t.chg}</span></div>`
   ).join('');
@@ -1322,52 +1207,33 @@ function updateTicker(tokens) {
 function updateStatusChips(source) {
   const chips = document.getElementById('statusChips');
   if (source === 'live') {
-    chips.innerHTML = `
-      <span class="mchip live">PRICE · LIVE</span>
-      <span class="mchip live">VOL · LIVE</span>
-      <span class="mchip live">MCAP · LIVE</span>
-      <span class="mchip live">CHAIN · LIVE</span>
-      <span class="mchip live">SOURCE · CLANKER.WORLD</span>
-    `;
+    chips.innerHTML = `<span class="mchip live">PRICE · LIVE</span><span class="mchip live">SOURCE · CLANKER.WORLD</span>`;
   } else if (source === 'dexscreener') {
-    chips.innerHTML = `
-      <span class="mchip live">PRICE · LIVE</span>
-      <span class="mchip live">VOL · LIVE</span>
-      <span class="mchip live">MCAP · LIVE</span>
-      <span class="mchip mock">SOURCE · DEXSCREENER FALLBACK</span>
-    `;
+    chips.innerHTML = `<span class="mchip live">PRICE · LIVE</span><span class="mchip mock">SOURCE · DEXSCREENER</span>`;
   } else {
-    chips.innerHTML = `
-      <span class="mchip mock">PRICE · DEMO</span>
-      <span class="mchip mock">VOL · DEMO</span>
-      <span class="mchip mock">MCAP · DEMO</span>
-      <span class="mchip mock">API · UNREACHABLE</span>
-    `;
+    chips.innerHTML = `<span class="mchip mock">DEMO DATA</span><span class="mchip mock">API · UNREACHABLE</span>`;
   }
 }
 
 function updateStats(tokens) {
   const totalVol = tokens.reduce((s,t) => {
-    const v = parseFloat((t.vol||'').replace(/[$,BMkK]/g, m => ({B:'e9',M:'e6',k:'e3',K:'e3'}[m]||'')));
-    return s + (isNaN(v)?0:v);
+    const v = parseFloat((t.vol||'').replace(/\$/,'').replace(/B$/,'e9').replace(/M$/,'e6').replace(/k$/i,'e3'));
+    return s + (isNaN(v) ? 0 : v);
   }, 0);
   document.getElementById('statVol').textContent = totalVol > 0 ? '$' + formatCompact(totalVol) : '—';
   document.getElementById('statTkn').textContent = tokens.length;
-  const gainers = tokens.filter(t => t.up).length;
-  document.getElementById('stat24h').textContent = gainers > 0 ? '+' + gainers : '—';
-  const newCount = tokens.filter(t => t.tag === 'new').length;
-  document.getElementById('statNew').textContent = newCount;
+  document.getElementById('stat24h').textContent = tokens.filter(t => t.up).length || '—';
+  document.getElementById('statNew').textContent = tokens.filter(t => t.tag === 'new').length;
 }
 
-// ─── MAIN LOAD ───────────────────────────────────────────────────────
+// ─── MAIN LOAD ────────────────────────────────────────────────────────
 async function loadTokens(force = false) {
   if (!force) {
     const cached = getCached();
     if (cached) {
       TOKENS = cached.data;
-      const source = TOKENS[0]?.datastatus === 'live' ? 'live' : 'fallback';
       updateCacheBar(true, cached.age, false);
-      updateStatusChips(source);
+      updateStatusChips(TOKENS[0]?.datastatus === 'live' ? 'live' : 'fallback');
       updateStats(TOKENS);
       render(filterTokens(TOKENS, currentFilter));
       updateTicker(TOKENS);
@@ -1387,14 +1253,12 @@ async function loadTokens(force = false) {
     TOKENS = result.data;
     updateCacheBar(true, 0, false);
     updateStatusChips(result.source);
-    // Show toast for newest hot token
     const hot = TOKENS.find(t => t.tag === 'hot');
     if (hot) showToast(hot);
   } else {
     TOKENS = FALLBACK_TOKENS;
-    updateCacheBar(false, 0, false);
-    document.getElementById('cacheStatus').textContent = 'API UNREACHABLE · SHOWING DEMO DATA';
     document.getElementById('cacheDot').className = 'cache-dot stale';
+    document.getElementById('cacheStatus').textContent = 'API UNREACHABLE · DEMO DATA';
     updateStatusChips('fallback');
   }
 
@@ -1411,38 +1275,99 @@ function forceRefresh() {
 function showToast(token) {
   const toast = document.getElementById('toast');
   const body = document.getElementById('toastBody');
-  body.innerHTML = `<strong>NEW ↑ ${token.sym}</strong><br>Launched on ${token.chain.toUpperCase()}<br>${token.chg} · ${token.holders} holders`;
+  body.innerHTML = `<strong>↑ ${token.sym} ${token.tag === 'hot' ? '🔥' : 'NEW'}</strong><br>${token.chain.toUpperCase()} · ${token.chg} · ${token.holders} holders`;
   toast.style.display = 'flex';
   setTimeout(() => { toast.style.display = 'none'; }, 5200);
 }
 
-// ─── FILTER ──────────────────────────────────────────────────────────
+// ─── FILTER ───────────────────────────────────────────────────────────
 function filterTokens(tokens, type) {
   if (type === 'base') return tokens.filter(t => t.chain === 'base');
   if (type === 'solana') return tokens.filter(t => t.chain === 'solana');
   if (type === 'new') return tokens.filter(t => t.tag === 'new');
   if (type === 'trending') return tokens.filter(t => t.up);
-  if (type === 'watchlist') return [];
+  if (type === 'watchlist') return tokens.filter(t => watchlist.has(t.sym));
   return tokens;
 }
 
 const LABELS = { all:'TRENDING NOW', base:'BASE TOKENS', solana:'SOLANA TOKENS', new:'NEW LAUNCHES', trending:'TRENDING UP', watchlist:'WATCHLIST' };
+
 function setFilter(btn, type) {
   document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
   currentFilter = type;
   document.getElementById('secTitle').textContent = LABELS[type] || 'TOKENS';
   render(filterTokens(TOKENS, type));
+  // sync bottom nav
+  if (type === 'watchlist') {
+    document.querySelectorAll('.bnav').forEach(b => b.classList.remove('on'));
+    document.getElementById('bnav-watch').classList.add('on');
+  }
 }
 
-// ─── UI HELPERS ──────────────────────────────────────────────────────
-document.querySelectorAll('.bnav').forEach(b => {
-  b.addEventListener('click', function() {
-    document.querySelectorAll('.bnav').forEach(x => x.classList.remove('on'));
-    this.classList.add('on');
-  });
+// ─── BOTTOM NAV ───────────────────────────────────────────────────────
+function bnavClick(btn, tab) {
+  document.querySelectorAll('.bnav').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+
+  if (tab === 'home') {
+    // show all, reset filter
+    document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('on'));
+    document.querySelector('.f-btn').classList.add('on');
+    currentFilter = 'all';
+    document.getElementById('secTitle').textContent = LABELS['all'];
+    render(filterTokens(TOKENS, 'all'));
+  } else if (tab === 'scan') {
+    forceRefresh();
+  } else if (tab === 'alerts') {
+    openModal();
+  } else if (tab === 'watch') {
+    document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('on'));
+    document.querySelectorAll('.f-btn')[5].classList.add('on');
+    currentFilter = 'watchlist';
+    document.getElementById('secTitle').textContent = LABELS['watchlist'];
+    render(filterTokens(TOKENS, 'watchlist'));
+  }
+}
+
+// ─── COLLAPSE ─────────────────────────────────────────────────────────
+function toggleCollapse(id) {
+  const body = document.getElementById(id + 'Body');
+  const caret = document.getElementById(id + 'Caret');
+  const open = body.classList.toggle('open');
+  caret.classList.toggle('open', open);
+}
+
+// ─── ALERTS MODAL ─────────────────────────────────────────────────────
+function openModal() {
+  document.getElementById('alertsModal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('alertsModal').classList.remove('open');
+}
+function submitAlert() {
+  const val = document.getElementById('alertInput').value.trim();
+  const note = document.getElementById('alertNote');
+  if (!val) {
+    note.style.color = 'var(--red)';
+    note.textContent = 'Please enter an email or Farcaster handle.';
+    return;
+  }
+  note.style.color = 'var(--acid)';
+  note.textContent = '✓ Subscribed! You\'ll receive alerts for hot token launches.';
+  document.getElementById('alertInput').value = '';
+  setTimeout(closeModal, 2000);
+}
+
+// Close modal on overlay click
+document.getElementById('alertsModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
 });
 
+// Alerts nav button (top right)
+document.getElementById('alertsBtn').addEventListener('click', openModal);
+
+// Theme toggle
 let dark = true;
 document.getElementById('themeBtn').addEventListener('click', function() {
   dark = !dark;
@@ -1450,27 +1375,13 @@ document.getElementById('themeBtn').addEventListener('click', function() {
   this.textContent = dark ? 'DARK' : 'LITE';
 });
 
-function toggleHowto() {
-  const body = document.getElementById('howtoBody');
-  const caret = document.getElementById('howtoCaret');
-  const open = body.classList.toggle('open');
-  caret.classList.toggle('open', open);
-}
-
-function toggleLegal() {
-  const body = document.getElementById('legalBody');
-  const caret = document.getElementById('legalCaret');
-  const open = body.classList.toggle('open');
-  caret.classList.toggle('open', open);
-}
-
-// ─── AUTO-REFRESH every 60s ─────────────────────────────────────────
+// ─── AUTO-REFRESH ─────────────────────────────────────────────────────
 setInterval(() => {
   clearCache();
   loadTokens(true);
 }, CACHE_TTL);
 
-// ─── INIT ────────────────────────────────────────────────────────────
+// ─── INIT ─────────────────────────────────────────────────────────────
 loadTokens();
 </script>
 </body>
